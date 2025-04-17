@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class EnsureUserIsHostelManager
+class CheckForHostelManager
 {
     /**
      * Handle an incoming request.
@@ -16,6 +16,7 @@ class EnsureUserIsHostelManager
      */
     public function handle(Request $request, Closure $next): Response
     {
+        dd('CheckForHostelManager middleware is working');
         if (!Auth::check() || !Auth::user()->hasRole('hostel_manager')) {
             abort(403, 'Unauthorized action.');
         }

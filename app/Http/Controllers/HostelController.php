@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\HostelRequest;
 use App\Services\HostelService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HostelController extends Controller
 {
@@ -17,7 +18,7 @@ class HostelController extends Controller
 
     public function index()
     {
-        $hostels = $this->hostelService->getHostelsByOwner(auth()->id());
+        $hostels = $this->hostelService->getHostelsByOwner(Auth::id());
         return view('hostels.index', compact('hostels'));
     }
 
@@ -61,7 +62,7 @@ class HostelController extends Controller
     }
 
     public function browse(Request $request)
-    {
+    { 
         $hostels = $this->hostelService->getAllHostels();
         return view('hostels.browse', compact('hostels'));
     }

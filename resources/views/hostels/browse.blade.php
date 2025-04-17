@@ -1,6 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
+@extends('layouts.general') 
+@section('content')
+        <div class="flex items-center justify-between mt-4">
             <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
                 <i data-lucide="search" class="h-6 w-6 text-gray-600"></i>
                 {{ __('Browse Hostels') }}
@@ -20,7 +20,6 @@
                 </form>
             </div>
         </div>
-    </x-slot>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <!-- Filters -->
@@ -133,10 +132,10 @@
         </div>
 
         <!-- Pagination -->
-        @if($hostels->hasPages())
+        {{-- @if($hostels->hasPages())
             <div class="mt-6">
                 {{ $hostels->links() }}
             </div>
-        @endif
+        @endif --}}
     </div>
-</x-app-layout>
+@endsection

@@ -34,8 +34,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
 
-    // Hostel Manager Routes
-    Route::middleware(['role:hostel_manager'])->group(function () {
+    
+    
+    // Student Routes
+    // Route::middleware(['student'])->group(function () {
+        // Browse Hostels
+        Route::get('/hostels/browse', [HostelController::class, 'browse'])->name('hostels.browse');
+        Route::get('/hostels/{hostel}/details', [HostelController::class, 'details'])->name('hostels.details');
+
+        // Bookings
+        Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+        Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+        Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
+
+        // Payments
+        Route::get('/payments/{booking}/pay', [PaymentController::class, 'createForBooking'])->name('payments.booking.create');
+    // });
+    // // Hostel Manager Routes
+    // Route::middleware(['hostel_manager'])->group(function () {
         // Hostels
         Route::get('/hostels', [HostelController::class, 'index'])->name('hostels.index');
         Route::get('/hostels/create', [HostelController::class, 'create'])->name('hostels.create');
@@ -69,21 +85,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
         Route::get('/payments/pending', [PaymentController::class, 'pending'])->name('payments.pending');
         Route::post('/payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
-    });
-
-    // Student Routes
-    Route::middleware(['role:student'])->group(function () {
-        // Browse Hostels
-        Route::get('/hostels/browse', [HostelController::class, 'browse'])->name('hostels.browse');
-        Route::get('/hostels/{hostel}/details', [HostelController::class, 'details'])->name('hostels.details');
-
-        // Bookings
-        Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-        Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-        Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
-
-        // Payments
-        Route::get('/payments/{booking}/pay', [PaymentController::class, 'createForBooking'])->name('payments.booking.create');
-    });
+    // });
 });
 require __DIR__.'/auth.php';

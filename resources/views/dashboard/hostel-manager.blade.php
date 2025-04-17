@@ -1,9 +1,8 @@
-<x-app-layout>
-    <x-slot name="header">
+@extends('layouts.general')
         <div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
                 <i data-lucide="layout-dashboard" class="h-6 w-6 text-gray-600"></i>
-                {{ __('Hostel Manager Dashboard') }}
+                Hostel Manager Dashboard
             </h2>
             <div class="flex items-center gap-3">
                 <span class="text-sm text-gray-500">Last updated: {{ now()->format('M d, Y h:i A') }}</span>
@@ -12,7 +11,6 @@
                 </button>
             </div>
         </div>
-    </x-slot>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <!-- Stats Overview -->
@@ -304,4 +302,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@section

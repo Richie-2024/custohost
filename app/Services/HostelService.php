@@ -7,6 +7,7 @@ use App\Repositories\HostelRepository;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class HostelService
 {
@@ -42,7 +43,7 @@ class HostelService
         if (isset($data['photo'])) {
             $data['photo'] = $this->uploadPhoto($data['photo']);
         }
-
+         $data['owner_id'] = Auth::id(); // Assuming the owner is the currently authenticated user
         $hostel = $this->hostelRepository->create($data);
         return $hostel;
     }

@@ -1,6 +1,7 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
+
+@extends('layouts.general')
+@section('content')
+<div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
                 <i data-lucide="building" class="h-6 w-6 text-gray-600"></i>
                 {{ __('Manage Hostels') }}
@@ -11,7 +12,6 @@
                 Add New Hostel
             </a>
         </div>
-    </x-slot>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -120,4 +120,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+@endsection
