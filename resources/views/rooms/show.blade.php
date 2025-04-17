@@ -227,7 +227,7 @@
                         @endif
 
                         @if($room->status === 'available')
-                            <a href="{{ route('bookings.create',  $room->$hostel) }}" 
+                            <a href="{{ route('bookings.create',  $room->hostel) }}" 
                             class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-primary-subtle rounded-lg p-2 group-hover:bg-primary-emphasis transition-colors">
