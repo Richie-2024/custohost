@@ -120,7 +120,7 @@
                         </a>
 
                         @if($hostel->available_rooms > 0 && $hostel->status === 'active')
-                            <a href="{{ route('bookings.create', ['hostel_id' => $hostel->id]) }}" 
+                            <a href="{{ route('bookings.create', $hostel }}" 
                                class="inline-flex items-center px-3 py-1.5 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
                                 <i class="bi bi-calendar-plus me-1"></i> Book Now
                             </a>

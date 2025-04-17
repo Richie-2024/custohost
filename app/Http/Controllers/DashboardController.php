@@ -31,28 +31,28 @@ class DashboardController extends Controller
         $user = Auth::user();
         
         // // if ($user->hasRole('hostel_manager')) {
-        //     $hostels = $this->hostelService->getHostelsByOwner($user->id);
-        //     $activeBookings = $this->bookingService->getActiveBookings($hostels->first()->id) ?? 0;
-        //     $pendingBookings = $this->bookingService->getPendingBookings($hostels->first()->id);
-        //     $totalRevenue = $this->paymentService->getTotalPaymentsForHostel($hostels->first()->id);
+            $hostels = $this->hostelService->getHostelsByOwner($user->id);
+            $activeBookings = $this->bookingService->getActiveBookings($hostels->first()->id) ?? 0;
+            $pendingBookings = $this->bookingService->getPendingBookings($hostels->first()->id);
+            $totalRevenue = $this->paymentService->getTotalPaymentsForHostel($hostels->first()->id);
 
-        //     return view('dashboard.hostel-manager', compact(
-        //         'hostels',
-        //         'activeBookings',
-        //         'pendingBookings',
-        //         'totalRevenue'
-        //     ));
+            return view('dashboard.hostel-manager', compact(
+                'hostels',
+                'activeBookings',
+                'pendingBookings',
+                'totalRevenue'
+            ));
         // }
 
         // Student Dashboard
-        $bookings = $this->bookingService->getBookingsByStudent($user->id);
-        $activeBooking = $bookings->where('status', 'active')->first();
-        $pendingPayments = $this->paymentService->getPendingPaymentsForHostel($activeBooking?->hostel_id ?? 0);
+        // $bookings = $this->bookingService->getBookingsByStudent($user->id);
+        // $activeBooking = $bookings->where('status', 'active')->first();
+        // $pendingPayments = $this->paymentService->getPendingPaymentsForHostel($activeBooking?->hostel_id ?? 0);
 
-        return view('dashboard.student', compact(
-            'bookings',
-            'activeBooking',
-            'pendingPayments'
-        ));
+        // return view('dashboard.student', compact(
+        //     'bookings',
+        //     'activeBooking',
+        //     'pendingPayments'
+        // ));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookingRequest;
+use App\Models\Hostel;
 use App\Services\{BookingService, RoomService};
 use Illuminate\Http\Request;
 
@@ -29,24 +30,24 @@ class BookingController extends Controller
         return view('bookings.index', compact('bookings'));
     }
 
-    public function create()
+    public function create(Hostel $hostel)
     {
-        $hostelId = request('hostel_id');
-        $roomId = request('room_id');
-
-        if ($roomId) {
-            $rooms = collect([$this->roomService->findById($roomId)]);
-        } else {
-            $rooms = $this->roomService->getAvailableRooms($hostelId);
-        }
-
+        // Get the hostel ID directly from the injected model
+        $hostelId = $hostel->id;
+    
+        // Fetch available rooms for the hostel
+        $rooms = $this->roomService->getAvailableRooms($hostelId);
+    
+        // Redirect if no rooms are available
         if ($rooms->isEmpty()) {
             return redirect()->route('hostels.browse')
                 ->with('error', 'No available rooms found.');
         }
-
-        return view('bookings.create', compact('rooms'));
+    
+        // Return the booking creation view with available rooms
+        return view('bookings.create', compact('rooms', 'hostel'));
     }
+    
 
     public function store(BookingRequest $request)
     {

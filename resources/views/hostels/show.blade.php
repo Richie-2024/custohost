@@ -251,7 +251,7 @@
                                 </a>
                     
                                 <!-- Create Booking -->
-                                <a href="{{ route('bookings.create') }}"
+                                <a href="{{ route('bookings.create',$hostel) }}"
                                    class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
                                     <div class="flex items-center gap-3">
                                         <div class="bg-green-100 rounded-lg p-2 group-hover:bg-green-200 transition-colors">

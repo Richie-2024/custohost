@@ -43,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/hostels/{hostel}/details', [HostelController::class, 'details'])->name('hostels.details');
 
         // Bookings
-        Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+        Route::get('/bookings/create/{hostel}', [BookingController::class, 'create'])->name('bookings.create');
         Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
         Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
