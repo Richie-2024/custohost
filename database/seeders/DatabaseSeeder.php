@@ -2,41 +2,55 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Hostel;
+use App\Models\Room;
 use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-        $roles=[
-            'admin',
-            'student',
-            'hostel_manager',
-        ];
+        // Create roles
+        $roles = ['admin', 'student', 'hostel_manager'];
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
         }
-      ;
 
-      $user1=  User::factory()->create([
+        // Create users
+        $student = User::factory()->create([
             'name' => 'Student Oscar',
             'email' => 'student@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-      $user1->assignRole('student');
-      $user2=  User::factory()->create([
+        $student->assignRole('student');
+
+        $admin = User::factory()->create([
             'name' => 'Admin Oscar',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-      $user2->assignRole('student');
+        $admin->assignRole('admin');
 
+        $manager = User::factory()->create([
+            'name' => 'Manager Mike',
+            'email' => 'manager@gmail.com',
+            'password' => bcrypt('12345678'),
+        ]);
+        $manager->assignRole('hostel_manager');
+
+        // Create hostels with rooms
+        Hostel::factory(5)->create(['owner_id' => $manager->id])->each(function ($hostel) {
+            $roomCount = rand(3, 10);
+
+            Room::factory($roomCount)->create([
+                'hostel_id' => $hostel->id
+            ]);
+
+            $hostel->total_rooms = $roomCount;
+            $hostel->available_rooms = $roomCount;
+            $hostel->save();
+        });
     }
 }

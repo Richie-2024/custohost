@@ -8,7 +8,8 @@ class Kernel extends HttpKernel
 {
     protected $middlewareAliases = [
         // ... other middleware aliases
-        'student' => \App\Http\Middleware\EnsureUserIsStudent::class,
         'hostel_manager' => \App\Http\Middleware\EnsureUserIsHostelManager::class,
+
+        'student' => \App\Http\Middleware\EnsureUserIsStudent::class,
     ];
 }

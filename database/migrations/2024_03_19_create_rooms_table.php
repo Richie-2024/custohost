@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hostel_id')->constrained()->onDelete('cascade');
             $table->string('room_number');
-            $table->enum('type', ['single', 'double', 'triple', 'quad']);
+            $table->enum('type', ['single', 'double', 'suite']);
+
             $table->integer('capacity');
             $table->decimal('price', 10, 2);
             $table->enum('status', ['available', 'occupied', 'maintenance'])->default('available');

@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
 
     // Hostel Manager Routes
-    Route::middleware(['role:hostel_manager'])->group(function () {
+    Route::middleware(['auth', 'hostel_manager'])->group(function () {
         // Hostels
         Route::get('/hostels', [HostelController::class, 'index'])->name('hostels.index');
         Route::get('/hostels/create', [HostelController::class, 'create'])->name('hostels.create');
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Student Routes
-    Route::middleware(['role:student'])->group(function () {
+    Route::middleware(['auth', 'student'])->group(function () {
         // Browse Hostels
         Route::get('/hostels/browse', [HostelController::class, 'browse'])->name('hostels.browse');
         Route::get('/hostels/{hostel}/details', [HostelController::class, 'details'])->name('hostels.details');
