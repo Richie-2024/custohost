@@ -43,14 +43,29 @@ class RoomService
 
     public function createRoom(array $data): Room
     {
+        $data = $this->convertAmenitiesToJson($data);
+
         return $this->roomRepository->create($data);
     }
 
     public function updateRoom(Room $room, array $data): bool
     {
+        // Convert amenities to JSON if necessary
+        $data = $this->convertAmenitiesToJson($data);
+        // Delegate the update logic to the repository
         return $this->roomRepository->update($room, $data);
     }
-
+    
+    public function convertAmenitiesToJson(array $data): array
+    {
+        // Check and encode amenities if they exist and are an array
+        if (!empty($data['amenities']) && is_array($data['amenities'])) {
+            $data['amenities'] = json_encode($data['amenities']);
+        }
+    
+        return $data;
+    }
+    
     public function deleteRoom(int $id): bool
     {
         return $this->roomRepository->delete($id);

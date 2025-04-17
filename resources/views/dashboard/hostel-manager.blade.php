@@ -1,4 +1,5 @@
 @extends('layouts.general')
+@section('content')
         <div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
                 <i data-lucide="layout-dashboard" class="h-6 w-6 text-gray-600"></i>
@@ -99,7 +100,7 @@
                         </div>
                         <div>
                             <p class="text-sm font-medium text-gray-500">Total Revenue</p>
-                            <p class="text-2xl font-bold text-gray-900">₹{{ number_format($totalRevenue, 2) }}</p>
+                            <p class="text-2xl font-bold text-gray-900">UGX{{ number_format($totalRevenue, 2) }}</p>
                         </div>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-sm">
@@ -201,7 +202,8 @@
                             Quick Actions
                         </h3>
                         <div class="space-y-3">
-                            <a href="{{ route('hostels.create') }}" 
+                            <a href="#" 
+                            
                                class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-blue-100 rounded-lg p-2 group-hover:bg-blue-200 transition-colors">
@@ -211,8 +213,8 @@
                                 </div>
                                 <i data-lucide="chevron-right" class="h-4 w-4 text-gray-400 group-hover:text-gray-500"></i>
                             </a>
-
-                            <a href="{{ route('rooms.create') }}" 
+                            @foreach($hostels as $hostel)
+                            <a href="{{ route('rooms.create',$hostel) }}" 
                                class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-green-100 rounded-lg p-2 group-hover:bg-green-200 transition-colors">
@@ -222,6 +224,7 @@
                                 </div>
                                 <i data-lucide="chevron-right" class="h-4 w-4 text-gray-400 group-hover:text-gray-500"></i>
                             </a>
+                            @endforeach
 
                             <a href="{{ route('bookings.pending') }}" 
                                class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
@@ -280,7 +283,7 @@
                                                class="h-4 w-4 text-purple-600"></i>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-medium text-gray-900">₹{{ number_format($payment->amount, 2) }}</p>
+                                            <p class="text-sm font-medium text-gray-900">UGX{{ number_format($payment->amount, 2) }}</p>
                                             <p class="text-xs text-gray-500">{{ $payment->created_at->format('M d, Y') }}</p>
                                         </div>
                                     </div>
@@ -302,4 +305,4 @@
             </div>
         </div>
     </div>
-@section
+@endsection

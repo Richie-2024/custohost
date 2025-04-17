@@ -128,7 +128,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">₹{{ number_format($booking->total_amount, 2) }}</div>
+                                        <div class="text-sm font-medium text-gray-900">UGX{{ number_format($booking->total_amount, 2) }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
@@ -172,7 +172,7 @@
                                 </div>
                                 <h4 class="text-sm font-medium text-gray-900">Total Amount</h4>
                             </div>
-                            <p class="text-lg font-semibold text-gray-900">₹{{ number_format($activeBooking->total_amount, 2) }}</p>
+                            <p class="text-lg font-semibold text-gray-900">UGX{{ number_format($activeBooking->total_amount, 2) }}</p>
                         </div>
 
                         <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">

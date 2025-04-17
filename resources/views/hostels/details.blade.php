@@ -1,19 +1,22 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
-                <i data-lucide="building" class="h-6 w-6 text-gray-600"></i>
-                {{ $hostel->name }}
-            </h2>
-            @if($hostel->available_rooms > 0 && $hostel->status === 'active')
-                <a href="{{ route('bookings.create', ['hostel_id' => $hostel->id]) }}" 
-                   class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm">
-                    <i data-lucide="calendar-plus" class="h-4 w-4 mr-2"></i>
-                    Book Now
-                </a>
-            @endif
-        </div>
-    </x-slot>
+
+@extends('layouts.general')
+@section('content')
+<!-- Header Section -->
+<div class="bg-white rounded-2xl border border-gray-200 shadow-md p-6 mb-5 flex flex-wrap items-center justify-between gap-4">
+    <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
+        <i data-lucide="building" class="h-7 w-7 text-blue-600"></i>
+        {{ $hostel->name }}
+    </h2>
+
+    @if($hostel->available_rooms > 0 && $hostel->status === 'active')
+        <a href="{{ route('bookings.create', ['hostel_id' => $hostel->id]) }}" 
+           class="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-full shadow-md transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <i data-lucide="calendar-plus" class="h-5 w-5"></i>
+            Book Now
+        </a>
+    @endif
+</div>
+
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -90,23 +93,29 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <p class="text-lg font-semibold text-gray-900">₹{{ number_format($room->price, 2) }}</p>
-                                            <p class="text-sm text-gray-500">per month</p>
+                                            <p class="text-lg font-semibold text-gray-900">UGX{{ number_format($room->price, 2) }}</p>
+                                            <p class="text-sm text-gray-500">Per month</p>
                                         </div>
                                     </div>
                                     <div class="mt-4 grid grid-cols-3 gap-4">
                                         <div class="flex items-center gap-2">
                                             <i data-lucide="users" class="h-4 w-4 text-gray-400"></i>
-                                            <span class="text-sm text-gray-600">{{ $room->capacity }} persons</span>
+                                            <span class="text-sm text-gray-600">{{ $room->capacity }} Persons</span>
                                         </div>
                                         @if($room->amenities)
-                                            @foreach(array_slice($room->amenities, 0, 2) as $amenity)
-                                                <div class="flex items-center gap-2">
-                                                    <i data-lucide="check" class="h-4 w-4 text-green-500"></i>
-                                                    <span class="text-sm text-gray-600">{{ $amenity }}</span>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                                        @php
+                                            // Decode the amenities JSON into an array
+                                            $decodedAmenities = json_decode($room->amenities, true);
+                                        @endphp
+                                    
+                                        @foreach(array_slice($decodedAmenities ?? [], 0, 2) as $amenity)
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="check" class="h-4 w-4 text-green-500"></i>
+                                                <span class="text-sm text-gray-600">{{ $amenity }}</span>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                    
                                     </div>
                                 </div>
                             @empty
@@ -214,4 +223,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

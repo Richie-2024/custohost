@@ -43,11 +43,14 @@ class RoomRepository
 
     public function create(array $data): Room
     {
+    
         return Room::create($data);
     }
+    
 
     public function update(Room $room, array $data): bool
     {
+    
         return $room->update($data);
     }
 

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomRequest;
+use App\Models\Hostel;
+use App\Models\Room;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
@@ -15,15 +18,16 @@ class RoomController extends Controller
         $this->roomService = $roomService;
     }
 
-    public function index()
+    public function index($hostelId)
     {
-        $rooms = $this->roomService->getPaginatedRooms(auth()->user()->hostel_id);
-        return view('rooms.index', compact('rooms'));
+        $rooms = $this->roomService->getPaginatedRooms($hostelId);
+        $hostel= Hostel::findOrFail($hostelId);
+        return view('rooms.index', compact('rooms', 'hostel'));
     }
 
-    public function create()
+    public function create(Hostel $hostel)
     {
-        return view('rooms.create');
+        return view('rooms.create',compact('hostel'));
     }
 
     public function store(RoomRequest $request)
@@ -45,18 +49,18 @@ class RoomController extends Controller
         return view('rooms.edit', compact('room'));
     }
 
-    public function update(RoomRequest $request, $id)
+    public function update(RoomRequest $request, $room)
     {
-        $room = $this->roomService->findById($id);
+        $room = $this->roomService->findById($room);
         $this->roomService->updateRoom($room, $request->validated());
         return redirect()->route('rooms.show', $room)
             ->with('success', 'Room updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $room)
     {
-        $this->roomService->deleteRoom($id);
-        return redirect()->route('rooms.index')
+        $this->roomService->deleteRoom($room);
+        return redirect()->route('rooms.index',$request->hostel_id)
             ->with('success', 'Room deleted successfully.');
     }
 

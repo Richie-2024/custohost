@@ -19,6 +19,7 @@ class HostelController extends Controller
     public function index()
     {
         $hostels = $this->hostelService->getHostelsByOwner(Auth::id());
+        // dd('okay');
         return view('hostels.index', compact('hostels'));
     }
 
@@ -76,7 +77,7 @@ class HostelController extends Controller
     public function rooms($id)
     {
         $hostel = $this->hostelService->findById($id);
-        return view('hostels.rooms', compact('hostel'));
+        return route('rooms.index', $hostel->id);
     }
 
     public function bookings($id)

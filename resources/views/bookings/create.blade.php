@@ -38,7 +38,7 @@
                                     <option value="{{ $room->id }}" 
                                             data-price="{{ $room->price }}"
                                             {{ old('room_id') == $room->id ? 'selected' : '' }}>
-                                        Room {{ $room->room_number }} - {{ ucfirst($room->type) }} (₹{{ number_format($room->price, 2) }}/month)
+                                        Room {{ $room->room_number }} - {{ ucfirst($room->type) }} (UGX{{ number_format($room->price, 2) }}/month)
                                     </option>
                                 @endforeach
                             </select>
@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-lg font-semibold text-gray-900">₹{{ number_format($rooms->first()->price, 2) }}</p>
+                                    <p class="text-lg font-semibold text-gray-900">UGX{{ number_format($rooms->first()->price, 2) }}</p>
                                     <p class="text-sm text-gray-500">per month</p>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                         <div class="space-y-3">
                             <div class="flex items-center justify-between text-sm">
                                 <span class="text-gray-500">Room Rate (per month)</span>
-                                <span class="text-gray-900 font-medium">₹<span id="room-rate">0.00</span></span>
+                                <span class="text-gray-900 font-medium">UGX<span id="room-rate">0.00</span></span>
                             </div>
                             <div class="flex items-center justify-between text-sm">
                                 <span class="text-gray-500">Duration</span>
@@ -138,7 +138,7 @@
                             </div>
                             <div class="border-t border-gray-200 pt-3 flex items-center justify-between">
                                 <span class="text-gray-900 font-medium">Total Amount</span>
-                                <span class="text-lg text-gray-900 font-semibold">₹<span id="total-amount">0.00</span></span>
+                                <span class="text-lg text-gray-900 font-semibold">UGX<span id="total-amount">0.00</span></span>
                             </div>
                         </div>
                     </div>

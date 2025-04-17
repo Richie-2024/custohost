@@ -1,29 +1,42 @@
 @extends('layouts.general')
 @section('content')
-        <div class="flex items-center justify-between">
-            <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
-                <i data-lucide="building" class="h-6 w-6 text-gray-600"></i>
-                {{ $hostel->name }}
-            </h2>
-            <div class="flex items-center gap-3">
-                <a href="{{ route('hostels.edit', $hostel) }}" 
-                   class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm">
-                    <i data-lucide="edit" class="h-4 w-4 mr-2"></i>
-                    Edit Hostel
-                </a>
-                <form action="{{ route('hostels.destroy', $hostel) }}" 
-                      method="POST"
-                      onsubmit="return confirm('Are you sure you want to delete this hostel?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                            class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-sm">
-                        <i data-lucide="trash-2" class="h-4 w-4 mr-2"></i>
-                        Delete Hostel
-                    </button>
-                </form>
-            </div>
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 bg-white sm:rounded-xl sm:shadow-sm sm:border sm:p-6 p-4">
+
+        <!-- Hostel Title -->
+        <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
+            <i class="bi bi-building text-gray-600 text-xl"></i>
+            {{ $hostel->name }}
+        </h2>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+            <!-- Edit Hostel -->
+            <a href="{{ route('hostels.edit', $hostel) }}"
+               class="inline-flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm w-full sm:w-auto">
+                <i class="bi bi-pencil-fill mr-2 text-sm"></i>
+                Edit Hostel
+            </a>
+
+            <!-- Delete Hostel -->
+            <form action="{{ route('hostels.destroy', $hostel) }}"
+                  method="POST"
+                  onsubmit="return confirm('Are you sure you want to delete this hostel?');"
+                  class="w-full sm:w-auto">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                        class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-sm w-full sm:w-auto">
+                    <i class="bi bi-trash-fill mr-2 text-sm"></i>
+                    Delete Hostel
+                </button>
+            </form>
         </div>
+    </div>
+</div>
+
+
+
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -55,6 +68,7 @@
                                     </span>
                                 </div>
         
+                                <input type="hidden" name="hostel_id" value="{{ $hostel->id }}">
                                 <div class="md:col-span-2">
                                     <h4 class="text-sm font-medium text-gray-500">Address</h4>
                                     <p class="mt-2 text-sm text-gray-900">{{ $hostel->address }}</p>
@@ -76,7 +90,7 @@
                                     <i class="bi bi-grid-1x2-fill text-gray-500"></i>
                                     Room Statistics
                                 </h3>
-                                <a href="{{ route('rooms.create') }}"
+                                <a href="{{ route('rooms.create',$hostel) }}"
                                    class="inline-flex items-center px-3 py-1.5 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm">
                                     <i class="bi bi-plus-lg mr-1"></i>
                                     Add Room
@@ -216,30 +230,53 @@
                     </div>
         
                     <!-- Quick Actions -->
-                    <div class="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                         <div class="p-6">
                             <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
                                 <i class="bi bi-lightning-charge-fill text-yellow-500"></i>
                                 Quick Actions
                             </h3>
-        
+                    
                             <div class="space-y-3">
-                                <a href="{{ route('rooms.create') }}" class="text-blue-500 hover:underline flex items-center">
-                                    <svg class="icon plus-lg" fill="currentColor"><!-- Replace with your SVG icon --></svg>
-                                    <span>Add New Room</span>
+                                <!-- Add New Room -->
+                                <a href="{{ route('rooms.create',$hostel) }}"
+                                   class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                                    <div class="flex items-center gap-3">
+                                        <div class="bg-blue-100 rounded-lg p-2 group-hover:bg-blue-200 transition-colors">
+                                            <i class="bi bi-plus-lg text-blue-600"></i>
+                                        </div>
+                                        <span class="text-sm font-medium text-gray-900">Add New Room</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-gray-400 group-hover:text-gray-500"></i>
                                 </a>
-                                <a href="{{ route('bookings.create') }}" class="text-green-500 hover:underline flex items-center">
-                                    <svg class="icon calendar-plus" fill="currentColor"><!-- Replace with your SVG icon --></svg>
-                                    <span>Create Booking</span>
+                    
+                                <!-- Create Booking -->
+                                <a href="{{ route('bookings.create') }}"
+                                   class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                                    <div class="flex items-center gap-3">
+                                        <div class="bg-green-100 rounded-lg p-2 group-hover:bg-green-200 transition-colors">
+                                            <i class="bi bi-calendar-plus text-green-600"></i>
+                                        </div>
+                                        <span class="text-sm font-medium text-gray-900">Create Booking</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-gray-400 group-hover:text-gray-500"></i>
                                 </a>
-                                <a href="{{ route('hostels.rooms', $hostel) }}" class="text-purple-500 hover:underline flex items-center">
-                                    <svg class="icon grid-3x3-gap-fill" fill="currentColor"><!-- Replace with your SVG icon --></svg>
-                                    <span>Manage Rooms</span>
+                    
+                                <!-- Manage Rooms -->
+                                <a href="{{ route('rooms.index', $hostel) }}"
+                                   class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                                    <div class="flex items-center gap-3">
+                                        <div class="bg-purple-100 rounded-lg p-2 group-hover:bg-purple-200 transition-colors">
+                                            <i class="bi bi-grid-fill text-purple-600"></i>
+                                        </div>
+                                        <span class="text-sm font-medium text-gray-900">Manage Rooms</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-gray-400 group-hover:text-gray-500"></i>
                                 </a>
                             </div>
-                            
                         </div>
                     </div>
+                    
         
                     <!-- Recent Activity -->
                     <div class="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
