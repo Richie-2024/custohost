@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PaymentRequest;
 use App\Services\{PaymentService, BookingService};
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PaymentController extends Controller
 {
@@ -26,7 +27,7 @@ class PaymentController extends Controller
             ? $this->paymentService->getPaymentsByHostel($user->hostel_id)
             : $this->paymentService->getPaymentsByStudent($user->id);
 
-        return view('payments.index', compact('payments'));
+        return view('payment.index', compact('payments'));
     }
 
     public function create()

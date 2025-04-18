@@ -70,4 +70,8 @@ class PaymentService
     {
         return $this->paymentRepository->getPendingPayments($hostelId);
     }
+    public function getPaymentsByStudent($studentId)
+{
+    return Payment::where('user_id', $studentId)->latest()->get();
+}
 }

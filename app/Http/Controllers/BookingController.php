@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\BookingRequest;
 use App\Services\{BookingService, RoomService};
 use Illuminate\Http\Request;

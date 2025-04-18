@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('booking_id')->constrained()->onDelete('cascade');
             $table->foreignId('hostel_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->decimal('amount', 10, 2);
             $table->enum('payment_method', ['cash', 'card', 'bank_transfer']);
             $table->enum('status', ['pending', 'completed', 'failed', 'refunded'])->default('pending');
