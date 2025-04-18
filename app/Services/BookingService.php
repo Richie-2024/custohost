@@ -105,6 +105,16 @@ class BookingService
         $this->bookingRepository->updateStatus($booking, 'completed');
         $this->roomRepository->updateStatus($booking->room, 'available');
     }
+    public function approveBooking(Booking $booking)
+    {
+        $booking->status = 'approved';
+        $booking->save();
+    }
+    public function rejectBooking(Booking $booking)
+    {
+        $booking->status = 'rejected';
+        $booking->save();
+    }
 
     public function getActiveBookings(int $hostelId): Collection
     {

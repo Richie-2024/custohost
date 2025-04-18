@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BookingRequest;
 use App\Models\Hostel;
 use App\Services\{BookingService, RoomService};
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -22,7 +22,7 @@ class BookingController extends Controller
 
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $bookings = $user->hasRole('hostel_manager')
             ? $this->bookingService->getBookingsByHostel($user->hostel_id)
             : $this->bookingService->getBookingsByStudent($user->id);
