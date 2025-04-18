@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Shared Routes (accessible by both roles)
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings', [BookingController::class, 'getAllBookings'])->name('bookings.all');
     Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
@@ -45,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
         // Bookings
         Route::get('/bookings/create/{hostel}', [BookingController::class, 'create'])->name('bookings.create');
         Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+        Route::get('/bookings/{hostel}/hostel', [BookingController::class, 'getBookingByHostel'])->name('bookings.hostel');
         Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
         // Payments

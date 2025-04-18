@@ -23,12 +23,12 @@ class BookingService
         $this->roomRepository = $roomRepository;
     }
 
-    public function getAllBookings(): Collection
+    public function getAllBookings()
     {
         return $this->bookingRepository->getAllBookings();
     }
 
-    public function getBookingsByHostel(int $hostelId): Collection
+    public function getBookingsByHostel(int $hostelId)
     {
         return $this->bookingRepository->getBookingsByHostel($hostelId);
     }

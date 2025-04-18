@@ -29,6 +29,16 @@ class BookingController extends Controller
 
         return view('bookings.index', compact('bookings'));
     }
+    public function getAllBookings()
+    {
+        $bookings = $this->bookingService->getAllBookings(); // Already paginated in BookingService
+        
+        return view('bookings.all', compact('bookings'));
+    }
+    
+                
+    
+
 
     public function create(Hostel $hostel)
     {
@@ -37,7 +47,7 @@ class BookingController extends Controller
     
         // Fetch available rooms for the hostel
         $rooms = $this->roomService->getAvailableRooms($hostelId);
-    
+       $bookings = $this->bookingService->getBookingsByHostel($hostelId);    
         // Redirect if no rooms are available
         if ($rooms->isEmpty()) {
             return redirect()->route('hostels.browse')
@@ -45,10 +55,15 @@ class BookingController extends Controller
         }
     
         // Return the booking creation view with available rooms
-        return view('bookings.create', compact('rooms', 'hostel'));
+        return view('bookings.create', compact('rooms', 'hostel','bookings'));
     }
     
 
+    public function getBookingByHostel($hostelId)
+    {
+        $bookings = $this->bookingService->getBookingsByHostel($hostelId);
+        return view('bookings.hostel', compact('bookings'));
+    }
     public function store(BookingRequest $request)
     {
         try {

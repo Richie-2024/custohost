@@ -148,7 +148,7 @@
                                     <i class="bi bi-calendar-event text-gray-500"></i>
                                     Recent Bookings
                                 </h3>
-                                <a href="{{ route('bookings.index') }}" class="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+                                <a href="{{route('bookings.hostel',$hostel)}}" class="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
                                     View All
                                     <i class="bi bi-chevron-right"></i>
                                 </a>

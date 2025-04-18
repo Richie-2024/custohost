@@ -8,16 +8,17 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookingRepository
 {
-    public function getAllBookings(): Collection
+    public function getAllBookings()
     {
-        return Booking::with(['hostel', 'room', 'student', 'payments'])->get();
+        return Booking::with(['hostel', 'room', 'student', 'payments'])->paginate(10);
     }
 
-    public function getBookingsByHostel(int $hostelId): Collection
+    public function getBookingsByHostel(int $hostelId,int $perPage=10): LengthAwarePaginator
     {
         return Booking::where('hostel_id', $hostelId)
             ->with(['room', 'student', 'payments'])
-            ->get();
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
 
     public function getBookingsByStudent(int $studentId): Collection
