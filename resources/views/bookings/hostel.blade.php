@@ -159,7 +159,7 @@
                         <div class="flex flex-col items-center space-y-4">
                             <i class="bi bi-calendar-x-fill text-4xl"></i>
                             <p class="text-sm">No bookings found</p>
-                            <a href="{{ route('bookings.create') }}" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 text-sm font-semibold">
+                            <a href="#" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 text-sm font-semibold">
                                 <i class="bi bi-plus-lg"></i> Add your first booking
                             </a>
                         </div>

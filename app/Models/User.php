@@ -47,4 +47,39 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function hostels()
+    {
+        return $this->hasMany(Hostel::class, 'owner_id');
+    }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'student_id');
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'student_id');
+    }
+    public function rooms()
+    {
+        return $this->hasMany(Room::class, 'owner_id');
+    }
+    public  function isHostelManager(): bool
+    {
+        return $this->hasRole('hostel_manager');
+    }
+    public function isStudent(): bool
+    {
+        return $this->hasRole('student');
+    }
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole('super_admin');
+    }
+    
+    
 }

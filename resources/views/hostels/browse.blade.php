@@ -8,7 +8,11 @@
         <i class="bi bi-house-door-fill text-gray-600 text-2xl"></i>
         {{ __('Browse Hostels') }}
     </h2>
-
+    @if(session('error'))
+    <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">{{ session('error') }}</strong>
+    </div>
+@endif
     <!-- Search Form -->
     <form action="{{ route('hostels.browse') }}" method="GET" class="flex items-center gap-2">
         <input type="text" 
@@ -120,7 +124,7 @@
                         </a>
 
                         @if($hostel->available_rooms > 0 && $hostel->status === 'active')
-                            <a href="{{ route('bookings.create', $hostel }}" 
+                            <a href="{{ route('bookings.create', $hostel) }}" 
                                class="inline-flex items-center px-3 py-1.5 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
                                 <i class="bi bi-calendar-plus me-1"></i> Book Now
                             </a>

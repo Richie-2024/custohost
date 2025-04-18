@@ -44,6 +44,7 @@ class BookingController extends Controller
     {
         // Get the hostel ID directly from the injected model
         $hostelId = $hostel->id;
+        $hostelName = $hostel->name;
     
         // Fetch available rooms for the hostel
         $rooms = $this->roomService->getAvailableRooms($hostelId);
@@ -51,7 +52,7 @@ class BookingController extends Controller
         // Redirect if no rooms are available
         if ($rooms->isEmpty()) {
             return redirect()->route('hostels.browse')
-                ->with('error', 'No available rooms found.');
+                ->with('error', 'No available rooms found for ' . $hostelName);
         }
     
         // Return the booking creation view with available rooms
