@@ -1,88 +1,117 @@
 @extends('layouts.general')
 @section('content')
-        <div class="flex items-center justify-between">
-            <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
-                <i data-lucide="graduation-cap" class="h-6 w-6 text-gray-600"></i>
-                Student Dashboard
+<div class="bg-white rounded-xl border border-gray-200 shadow-sm mb-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between p-6">
+        <div class="flex items-center gap-3 ">
+            <i class="bi bi-house-door text-gray-600 text-2xl"></i>
+            <h2 class="text-2xl font-bold text-gray-800">
+                Tenant Dashboard
             </h2>
-            <div class="flex items-center gap-3">
-                <span class="text-sm text-gray-500">Last updated: {{ now()->format('M d, Y h:i A') }}</span>
-                <button onclick="window.location.reload()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                    <i data-lucide="refresh-cw" class="h-5 w-5 text-gray-500"></i>
-                </button>
-            </div>
         </div>
+        
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 text-sm text-gray-500">
+                <i class="bi bi-clock-history text-gray-400 text-base"></i>
+                <span>Last updated: {{ now()->format('M d, Y h:i A') }}</span>
+            </div>
+            <button onclick="window.location.reload()" class="p-2 bg-white border border-gray-200 hover:bg-gray-100 rounded-full transition-colors">
+                <i class="bi bi-arrow-clockwise text-gray-600 text-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <!-- Current Booking Status -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm mb-6">
             <div class="p-6">
                 @if($activeBooking)
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                            <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
-                            Current Booking
-                        </h3>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                            <i data-lucide="circle" class="h-3 w-3 mr-1"></i>
-                            Active
+                        <div class="flex items-center gap-2">
+                            <i class="bi bi-check-circle-fill text-green-500 text-lg"></i>
+                            <h3 class="text-xl font-bold text-gray-900">
+                                Current Booking
+                            </h3>
+                        </div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-700">
+                            <i class="bi bi-circle-fill text-green-400 text-xs mr-2"></i> Active
                         </span>
                     </div>
+        
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="bg-blue-100 rounded-lg p-2">
-                                    <i data-lucide="building" class="h-5 w-5 text-blue-600"></i>
+                        <!-- Hostel Card -->
+                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="bg-blue-100 rounded-full p-3">
+                                    <i class="bi bi-building text-blue-600 text-lg"></i>
                                 </div>
-                                <h4 class="text-sm font-medium text-gray-900">Hostel</h4>
+                                <h4 class="text-md font-semibold text-gray-900">My Hostel</h4>
                             </div>
-                            <p class="text-sm text-gray-900">{{ $activeBooking->hostel->name }}</p>
+                            <p class="text-sm text-gray-800">{{ $activeBooking->hostel->name }}</p>
                             <p class="text-xs text-gray-500 mt-1">{{ $activeBooking->hostel->address }}</p>
                         </div>
+                        <!-- Browse Hostels Card -->
+                <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-blue-100 rounded-full p-3">
+                            <i class="bi bi-house-door-fill text-blue-600 text-lg"></i>
+                        </div>
+                        <h4 class="text-md font-semibold text-gray-900">Browse Hostels</h4>
+                    </div>
+                    <p class="text-sm text-gray-800">Discover a variety of hostels available near you.</p>
+                    <p class="text-xs text-gray-500 mt-1">Explore affordable options, with convenient locations and great amenities.</p>
+                    <a href="{{ route('hostels.browse') }}" class="mt-3 text-sm text-blue-600 hover:underline">View Available Hostels</a>
+                </div>
 
-                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="bg-purple-100 rounded-lg p-2">
-                                    <i data-lucide="door-open" class="h-5 w-5 text-purple-600"></i>
+                        <!-- Room Details Card -->
+                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="bg-purple-100 rounded-full p-3">
+                                    <i class="bi bi-door-open-fill text-purple-600 text-lg"></i>
                                 </div>
-                                <h4 class="text-sm font-medium text-gray-900">Room Details</h4>
+                                <h4 class="text-md font-semibold text-gray-900">Room Details</h4>
                             </div>
-                            <p class="text-sm text-gray-900">Room {{ $activeBooking->room->room_number }}</p>
+                            <p class="text-sm text-gray-800">Room {{ $activeBooking->room->room_number }}</p>
                             <p class="text-xs text-gray-500 mt-1">{{ ucfirst($activeBooking->room->type) }} Room</p>
                         </div>
-
-                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="bg-green-100 rounded-lg p-2">
-                                    <i data-lucide="calendar" class="h-5 w-5 text-green-600"></i>
+        
+                        <!-- Duration Card -->
+                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="bg-green-100 rounded-full p-3">
+                                    <i class="bi bi-calendar-event text-green-600 text-lg"></i>
                                 </div>
-                                <h4 class="text-sm font-medium text-gray-900">Duration</h4>
+                                <h4 class="text-md font-semibold text-gray-900">Duration</h4>
                             </div>
-                            <p class="text-sm text-gray-900">
-                                {{ $activeBooking->check_in_date->format('M d, Y') }} - 
-                                {{ $activeBooking->check_out_date->format('M d, Y') }}
+                            <p class="text-sm text-gray-800">
+                                {{ $activeBooking->check_in_date->format('M d, Y') }} – {{ $activeBooking->check_out_date->format('M d, Y') }}
                             </p>
-                            <p class="text-xs text-gray-500 mt-1">
-                                {{ $activeBooking->check_in_date->diffInDays($activeBooking->check_out_date) }} days
+                            {{-- <p class="text-xs text-gray-500 mt-1">
+                                {{ floor($activeBooking->check_in_date->diffInDays($activeBooking->check_out_date)) }} days
                             </p>
+                             --}}
                         </div>
                     </div>
+        
                 @else
                     <div class="text-center py-12">
                         <div class="bg-gray-100 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="home" class="h-8 w-8 text-gray-400"></i>
+                            <i class="bi bi-house-door text-gray-400 text-3xl"></i>
                         </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No Active Booking</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">No Active Booking</h3>
                         <p class="text-sm text-gray-500 mb-6">Get started by booking a room in one of our hostels.</p>
                         <a href="{{ route('hostels.browse') }}" 
-                           class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm">
-                            <i data-lucide="search" class="h-4 w-4 mr-2"></i>
+                           class="inline-flex items-center gap-2 px-5 py-2.5 border border-transparent rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition shadow-sm">
+                            <i class="bi bi-search text-white text-base"></i>
                             Browse Hostels
                         </a>
                     </div>
                 @endif
             </div>
         </div>
+        
 
         <!-- Booking History -->
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
@@ -93,17 +122,44 @@
                         Booking History
                     </h3>
                 </div>
+        
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                            <tr class="bg-gray-50">
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hostel</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Room</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <i class="bi bi-house-door text-gray-400"></i>
+                                        Hostel
+                                    </div>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <i class="bi bi-door-open text-gray-400"></i>
+                                        Room
+                                    </div>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <i class="bi bi-calendar text-gray-400"></i>
+                                        Duration
+                                    </div>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <i class="bi bi-cash-coin text-gray-400"></i>
+                                        Amount
+                                    </div>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <i class="bi bi-check2-circle text-gray-400"></i>
+                                        Status
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
+                        
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($bookings as $booking)
                                 <tr class="hover:bg-gray-50 transition-colors">
@@ -115,10 +171,12 @@
                                             <div class="text-sm font-medium text-gray-900">{{ $booking->hostel->name }}</div>
                                         </div>
                                     </td>
+        
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">Room {{ $booking->room->room_number }}</div>
                                         <div class="text-sm text-gray-500">{{ ucfirst($booking->room->type) }}</div>
                                     </td>
+        
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">
                                             {{ $booking->check_in_date->format('M d') }} - {{ $booking->check_out_date->format('M d, Y') }}
@@ -127,17 +185,21 @@
                                             {{ $booking->check_in_date->diffInDays($booking->check_out_date) }} days
                                         </div>
                                     </td>
+        
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">UGX{{ number_format($booking->total_amount, 2) }}</div>
+                                        <div class="text-sm font-medium text-gray-900">
+                                            UGX{{ number_format($booking->total_amount, 2) }}
+                                        </div>
                                     </td>
+        
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                        <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                             {{ $booking->status === 'completed' ? 'bg-green-100 text-green-800' : 
                                                ($booking->status === 'active' ? 'bg-blue-100 text-blue-800' : 
                                                ($booking->status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800')) }}">
                                             <i data-lucide="circle" class="h-2 w-2 mr-1"></i>
                                             {{ ucfirst($booking->status) }}
-                                        </span>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
@@ -155,55 +217,61 @@
                 </div>
             </div>
         </div>
+        
 
         <!-- Payment Status -->
         @if($activeBooking)
-            <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-6">
-                        <i data-lucide="credit-card" class="h-5 w-5 text-purple-500"></i>
-                        Payment Status
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="bg-green-100 rounded-lg p-2">
-                                    <i data-lucide="wallet" class="h-5 w-5 text-green-600"></i>
-                                </div>
-                                <h4 class="text-sm font-medium text-gray-900">Total Amount</h4>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
+            <div class="p-6">
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="bi bi-credit-card text-purple-500 text-xl"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">Payment Status</h3>
+                </div>
+    
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-green-100 rounded-lg p-2">
+                                <i class="bi bi-wallet2 text-green-600 text-lg"></i>
                             </div>
-                            <p class="text-lg font-semibold text-gray-900">UGX{{ number_format($activeBooking->total_amount, 2) }}</p>
+                            <h4 class="text-sm font-medium text-gray-900">Total Amount</h4>
                         </div>
-
-                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="bg-blue-100 rounded-lg p-2">
-                                    <i data-lucide="check-circle" class="h-5 w-5 text-blue-600"></i>
-                                </div>
-                                <h4 class="text-sm font-medium text-gray-900">Payment Status</h4>
+                        <p class="text-lg font-semibold text-gray-900">
+                            UGX{{ number_format($activeBooking->total_amount, 2) }}
+                        </p>
+                    </div>
+    
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-blue-100 rounded-lg p-2">
+                                <i class="bi bi-check-circle text-blue-600 text-lg"></i>
                             </div>
-                            @if($pendingPayments->count() > 0)
-                                <div class="flex items-center justify-between">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                        <i data-lucide="alert-circle" class="h-3 w-3 mr-1"></i>
-                                        Payment Pending
-                                    </span>
-                                    <a href="{{ route('payments.booking.create', $activeBooking->id) }}" 
-                                       class="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
-                                        Make Payment
-                                        <i data-lucide="chevron-right" class="h-4 w-4"></i>
-                                    </a>
-                                </div>
-                            @else
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    <i data-lucide="check-circle" class="h-3 w-3 mr-1"></i>
-                                    Fully Paid
+                            <h4 class="text-sm font-medium text-gray-900">Payment Status</h4>
+                        </div>
+    
+                        @if($pendingPayments->count() > 0)
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                    <i class="bi bi-exclamation-circle-fill mr-1 text-yellow-800"></i>
+                                    Payment Pending
                                 </span>
-                            @endif
-                        </div>
+                                <a href="{{ route('payments.booking.create', $activeBooking->id) }}"
+                                   class="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700">
+                                    Make Payment
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </div>
+                        @else
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                <i class="bi bi-check-circle-fill mr-1 text-green-800"></i>
+                                Fully Paid
+                            </span>
+                        @endif
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
+    @endif
+    
     </div>
 @endsection

@@ -29,30 +29,38 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
-        // // if ($user->hasRole('hostel_manager')) {
-            $hostels = $this->hostelService->getHostelsByOwner($user->id);
-            $activeBookings = $this->bookingService->getActiveBookings($hostels->first()->id) ?? 0;
-            $pendingBookings = $this->bookingService->getPendingBookings($hostels->first()->id);
-            $totalRevenue = $this->paymentService->getTotalPaymentsForHostel($hostels->first()->id);
-
-            return view('dashboard.hostel-manager', compact(
-                'hostels',
-                'activeBookings',
-                'pendingBookings',
-                'totalRevenue'
-            ));
-        // }
-
-        // Student Dashboard
-        // $bookings = $this->bookingService->getBookingsByStudent($user->id);
-        // $activeBooking = $bookings->where('status', 'active')->first();
-        // $pendingPayments = $this->paymentService->getPendingPaymentsForHostel($activeBooking?->hostel_id ?? 0);
-
-        // return view('dashboard.student', compact(
-        //     'bookings',
-        //     'activeBooking',
-        //     'pendingPayments'
-        // ));
+        $userRole = $user->getRoleNames()->first(); // Get the user's role
+    
+        switch ($userRole) {
+            case 'hostel_manager':
+                // Get all hostels owned by the user
+                $hostels = $user->getOwnedHostels();
+                $hostelIds = $hostels->pluck('id');
+    
+                // Fetch bookings and revenue using collection methods
+                $activeBookings = $hostelIds->map(fn($id) => $this->bookingService->getActiveBookings($id))->flatten();
+                $pendingBookings = $hostelIds->map(fn($id) => $this->bookingService->getPendingBookings($id))->flatten();
+                $totalRevenue = $hostelIds->sum(fn($id) => $this->paymentService->getTotalPaymentsForHostel($id));
+    
+                return view('dashboard.hostel-manager', compact(
+                    'hostels', 'activeBookings', 'pendingBookings', 'totalRevenue'
+                ));
+    
+            case 'student':
+                // Get student's bookings
+                $bookings = $this->bookingService->getBookingsByStudent($user->id);
+                $activeBooking = $bookings->firstWhere('status', 'active');
+                $pendingPayments = $this->paymentService->getPendingPaymentsForHostel($activeBooking?->hostel_id ?? 0);
+    
+                return view('dashboard.student', compact(
+                    'bookings', 'activeBooking', 'pendingPayments'
+                ));
+    
+            default:
+                abort(403, 'Unauthorized access');
+        }
     }
+    
+    
+    
 }

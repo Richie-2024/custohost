@@ -52,6 +52,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Hostel::class, 'owner_id');
     }
+
+
+    public function getOwnedHostels()
+    {
+        return $this->hostels()->get(); // Fetch all hostels owned by the user
+    }
+
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'student_id');

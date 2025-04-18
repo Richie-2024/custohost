@@ -23,6 +23,8 @@ class BookingController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $userId= $user->id;
+        $userRole = $user->getRoleNames()->first();
         $bookings = $user->hasRole('hostel_manager')
             ? $this->bookingService->getBookingsByHostel($user->hostel_id)
             : $this->bookingService->getBookingsByStudent($user->id);
