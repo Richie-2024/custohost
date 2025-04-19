@@ -3,11 +3,13 @@
 @section('content')
 <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
     <!-- Breadcrumb -->
-    <nav class="mb-4 flex items-center space-x-2 text-sm text-gray-500">
-        <a href="{{ route('rooms.index',$hostel->id) }}" class="hover:text-gray-700">Rooms</a>
-        <i class="bi bi-chevron-right text-xs"></i>
-        <span class="text-gray-900">Add Room</span>
+    @hostel_manager
+    <nav class="mb-6 flex items-center text-sm space-x-2">
+        <a href="{{url()->previous()}}" class="text-blue-400 hover:text-blue-600 transition-colors">Back</a>
+        <i class="bi bi-chevron-right text-blue-300 text-xs"></i>
+        <a href="{{ route('hostels.index') }}" class="text-blue-700 hover:text-blue-600 transition-colors">Add Room.</a>
     </nav>
+    @endhostel_manager
     <div class="bg-white shadow-lg rounded-xl border border-gray-200">
         <!-- Header -->
         <div class="p-6 border-b border-gray-200">

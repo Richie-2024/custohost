@@ -26,9 +26,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Auth Routes
+    Route::get('/bookings/{hostel}/create', [BookingController::class, 'create'])->name('bookings.create');
 });
 
-Route::group(['middleware' => ['auth', 'role:student']], function () {
+// Route::group(['middleware' => ['auth', 'role:student']], function () {
+Route::group(['auth'], function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -41,13 +45,14 @@ Route::group(['middleware' => ['auth', 'role:student']], function () {
 
 });
  // Student Routes
- Route::middleware(['student'])->group(function () {
+//  Route::middleware(['student'])->group(function () {
+ Route::middleware(['auth'])->group(function () {
     // Browse Hostels
     Route::get('/hostels/browse', [HostelController::class, 'browse'])->name('hostels.browse');
     Route::get('/hostels/{hostel}/details', [HostelController::class, 'details'])->name('hostels.details');
 
     // Bookings
-    Route::get('/bookings/{hostel}/create', [BookingController::class, 'create'])->name('bookings.create');
+   
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('/bookings/{hostel}/hostel', [BookingController::class, 'getBookingByHostel'])->name('bookings.hostel');
     Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
@@ -56,7 +61,7 @@ Route::group(['middleware' => ['auth', 'role:student']], function () {
     Route::get('/payments/{booking}/pay', [PaymentController::class, 'createForBooking'])->name('payments.booking.create');
 });
 // // Hostel Manager Routes
-Route::middleware(['hostel_manager'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     // Hostels
     Route::get('/hostels', [HostelController::class, 'index'])->name('hostels.index');
     Route::get('/hostels/create', [HostelController::class, 'create'])->name('hostels.create');

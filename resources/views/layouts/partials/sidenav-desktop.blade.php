@@ -1,143 +1,145 @@
 <aside id="desktop-sidebar" class="w-60 bg-white shadow-lg hidden lg:block sticky top-0 max-h-screen overflow-y-auto transition-all duration-300 ease-in-out z-40 border-r-4 border-gradient-to-b from-blue-500 to-indigo-500">
   <ul class="py-6 space-y-4">
+    @hostel_manager
     <!-- Dashboard -->
     <li>
       <a href="{{ route('dashboard') }}" 
-         class="block py-2 px-6 rounded-lg flex items-center 
+         class="block py-2 px-6  flex items-center 
          {{ request()->routeIs('dashboard') ? 'bg-indigo-100 text-indigo-800 font-semibold' : 'hover:bg-indigo-50 text-gray-800' }}">
-          <i class="bi bi-house-door text-lg mr-3"></i>
-          Dashboard
-      </a>
-  </li>
-  
+         <i class="bi bi-grid text-lg mr-3"></i> Dashboard
 
-    <!-- Projects Section -->
-    <li>
-      <a href="#" class="desktop--link block py-2 px-6 hover:bg-indigo-50 focus:outline-none rounded-lg flex items-center">
-        <i class="bi bi-folder text-lg mr-3"></i>
-        Hostels
       </a>
     </li>
 
-    <!-- Reports Dropdown with Nested Subtasks -->
+    <!-- My Hostels Dropdown -->
+    @php
+      $hostelRoutes = ['hostels.show', 'hostels.create', 'hostels.edit', 'hostels.rooms', 'hostels.bookings'];
+      $isHostelActive = collect($hostelRoutes)->contains(function($route) {
+          return request()->routeIs($route);
+      });
+    @endphp
     <li>
-      <!-- Top-level Reports Dropdown Toggle -->
-      <button class="desktop--dropdown-toggle block w-full text-left py-2 px-6 hover:bg-indigo-50 focus:outline-none flex items-center rounded-lg" data-dropdown-target="desktop--reports-dropdown">
-        <i class="bi bi-bar-chart text-lg mr-3"></i>
-        Payments
-        <i class="bi bi-chevron-down ml-auto text-gray-600"></i>
+      <button class="desktop--dropdown-toggle block w-full text-left py-2 px-6 {{ $isHostelActive ? 'bg-indigo-50' : 'hover:bg-indigo-50' }} focus:outline-none flex items-center" data-dropdown-target="desktop--hostels-dropdown">
+        <i class="bi bi-house-door text-lg mr-3"></i> My Hostels
+
+        <i class="bi bi-chevron-down ml-auto text-gray-600 transition-transform duration-200 {{ $isHostelActive ? 'rotate-180' : '' }}"></i>
       </button>
-
-      <!-- Reports Dropdown Menu -->
-      <ul id="desktop--reports-dropdown" class="desktop--dropdown hidden pl-6 space-y-2">
-        <li>
-          <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none rounded-lg">Monthly</a>
-        </li>
-        <li>
-          <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none rounded-lg">Yearly</a>
-        </li>
-        <li>
-          <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none rounded-lg">Custom Reports</a>
-        </li>
-
-        <!-- Nested Subtasks Dropdown inside Reports -->
-        <li>
-          <button class="desktop--nested-dropdown-toggle block w-full text-left py-2 hover:bg-indigo-100 focus:outline-none flex items-center rounded-lg" data-dropdown-target="desktop--reports-subtasks-dropdown">
-            <i class="bi bi-caret-right-fill text-lg mr-3"></i>
-            Subpayment
-            <i class="bi bi-chevron-down ml-auto text-gray-600"></i>
-          </button>
-
-          <ul id="desktop--reports-subtasks-dropdown" class="desktop--nested-dropdown hidden pl-6 space-y-2">
+      <ul id="desktop--hostels-dropdown" class="desktop--dropdown pl-8 space-y-2 {{ $isHostelActive ? '' : 'hidden' }}">
+        @if(Auth::user()->hostels->isEmpty())
+          <li>
+            <a href="{{ route('hostels.create') }}" 
+               data-group="hostels"
+               class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  flex items-center text-gray-500
+                      {{ request()->routeIs('hostels.create') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
+              <i class="bi bi-plus-circle text-sm mr-2"></i> 
+              Create Hostel
+            </a>
+          </li>
+        @else
+          @foreach (Auth::user()->hostels as $hostel)
             <li>
-              <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-200 focus:outline-none rounded-lg">Payment A</a>
+              <a href="{{ route('hostels.show', $hostel) }}" 
+                 data-group="hostels"
+                 class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  flex items-center text-gray-500
+                        {{ request()->routeIs('hostels.show') && request()->route('hostel') == $hostel->id ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
+                        <i class="bi bi-door-open text-lg mr-3"></i>
+                        {{ $hostel->name }}
+              </a>
             </li>
-            <li>
-              <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-200 focus:outline-none rounded-lg">Payment B</a>
-            </li>
-            <li>
-              <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-200 focus:outline-none rounded-lg">Payment C</a>
-            </li>
-          </ul>
-        </li>
+          @endforeach
+        @endif
       </ul>
-    </li>
-
-    <!-- Team Management -->
-    <li>
-      <a href="#" class="desktop--link block py-2 px-6 hover:bg-indigo-50 focus:outline-none rounded-lg flex items-center">
-        <i class="bi bi-person-plus text-lg mr-3"></i>
-        Room Management
-      </a>
-    </li>
-
-    <!-- Invoices Section -->
-    <li>
-      <a href="#" class="desktop--link block py-2 px-6 hover:bg-indigo-50 focus:outline-none rounded-lg flex items-center">
-        <i class="bi bi-file-earmark-text text-lg mr-3"></i>
-        Invoices
-      </a>
-    </li>
-
-    <!-- Calendar -->
-    <li>
-      <a href="#" class="desktop--link block py-2 px-6 hover:bg-indigo-50 focus:outline-none rounded-lg flex items-center">
-        <i class="bi bi-calendar text-lg mr-3"></i>
-        Bookings
-      </a>
     </li>
 
     <!-- Settings Dropdown -->
+    @php
+      $settingRoutes = ['settings.general', 'settings.security', 'settings.notifications'];
+      $isSettingsActive = collect($settingRoutes)->contains(function($route) {
+          return request()->routeIs($route);
+      });
+    @endphp
     <li>
-      <button class="desktop--dropdown-toggle block w-full text-left py-2 px-6 hover:bg-indigo-50 focus:outline-none flex items-center rounded-lg" data-dropdown-target="desktop--settings-dropdown">
+      <button class="desktop--dropdown-toggle block w-full text-left py-2 px-6 {{ $isSettingsActive ? 'bg-indigo-50' : 'hover:bg-indigo-50' }} focus:outline-none flex items-center " data-dropdown-target="desktop--settings-dropdown">
         <i class="bi bi-gear text-lg mr-3"></i>
         Settings
-        <i class="bi bi-chevron-down ml-auto text-gray-600"></i>
+        <i class="bi bi-chevron-down ml-auto text-gray-600 transition-transform duration-200 {{ $isSettingsActive ? 'rotate-180' : '' }}"></i>
       </button>
-      <ul id="desktop--settings-dropdown" class="desktop--dropdown hidden pl-6 space-y-2">
+      <ul id="desktop--settings-dropdown" class="desktop--dropdown pl-6 space-y-2 {{ $isSettingsActive ? '' : 'hidden' }}">
         <li>
-          <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none rounded-lg">General</a>
+          <a href="#" 
+             data-group="settings"
+             class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  text-gray-500
+                    {{ request()->routeIs('settings.general') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
+            General
+          </a>
         </li>
         <li>
-          <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none rounded-lg">Security</a>
+          <a href="#" 
+             data-group="settings"
+             class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  text-gray-500
+                    {{ request()->routeIs('settings.security') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
+            Security
+          </a>
         </li>
         <li>
-          <a href="#" class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none rounded-lg">Notifications</a>
+          <a href="#" 
+             data-group="settings"
+             class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  text-gray-500
+                    {{ request()->routeIs('settings.notifications') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
+            Notifications
+          </a>
         </li>
       </ul>
     </li>
+@endhostel_manager
   </ul>
 </aside>
 
-<!-- JavaScript for Dropdown Functionality -->
+<!-- Script -->
 <script>
-  // Top-Level Dropdown Toggles
-  const desktopDropdownToggles = document.querySelectorAll('.desktop--dropdown-toggle');
-  desktopDropdownToggles.forEach((toggle) => {
+document.addEventListener("DOMContentLoaded", function () {
+  const dropdownToggles = document.querySelectorAll('.desktop--dropdown-toggle');
+
+  dropdownToggles.forEach(toggle => {
     toggle.addEventListener('click', function () {
       const targetID = this.getAttribute('data-dropdown-target');
       const targetDropdown = document.getElementById(targetID);
-      document.querySelectorAll('.desktop--dropdown').forEach((dropdown) => {
+      const chevronIcon = this.querySelector('.bi-chevron-down');
+
+      // Close other dropdowns
+      document.querySelectorAll('.desktop--dropdown').forEach(dropdown => {
         if (dropdown.id !== targetID) {
           dropdown.classList.add('hidden');
+          const otherToggle = document.querySelector(`[data-dropdown-target="${dropdown.id}"]`);
+          const otherChevron = otherToggle?.querySelector('.bi-chevron-down');
+          if (otherChevron) {
+            otherChevron.classList.remove('rotate-180');
+          }
         }
       });
+
+      // Toggle current dropdown and rotate chevron
       targetDropdown.classList.toggle('hidden');
+      chevronIcon.classList.toggle('rotate-180');
     });
   });
 
-  // Nested Dropdown Toggles (e.g., Subtasks inside Reports)
-  const desktopNestedDropdownToggles = document.querySelectorAll('.desktop--nested-dropdown-toggle');
-  desktopNestedDropdownToggles.forEach((toggle) => {
-    toggle.addEventListener('click', function () {
-      const targetID = this.getAttribute('data-dropdown-target');
-      const targetDropdown = document.getElementById(targetID);
-      document.querySelectorAll('.desktop--nested-dropdown').forEach((dropdown) => {
-        if (dropdown.id !== targetID) {
-          dropdown.classList.add('hidden');
-        }
+  // Highlight only one subitem per group
+  const subLinks = document.querySelectorAll('.desktop--dropdown-link');
+
+  subLinks.forEach(link => {
+    link.addEventListener('click', function () {
+      const group = this.dataset.group;
+      if (!group) return;
+
+      document.querySelectorAll(`.desktop--dropdown-link[data-group="${group}"]`).forEach(item => {
+        item.classList.remove('bg-indigo-100', 'text-indigo-700', 'font-semibold');
+        item.classList.add('text-gray-500');
       });
-      targetDropdown.classList.toggle('hidden');
+
+      this.classList.add('bg-indigo-100', 'text-indigo-700', 'font-semibold');
+      this.classList.remove('text-gray-500');
     });
   });
+});
 </script>

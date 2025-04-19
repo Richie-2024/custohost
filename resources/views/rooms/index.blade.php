@@ -2,24 +2,17 @@
 
 @section('content')
 
-<!-- Header Section -->
-<div class="border border-gray-200 rounded-lg p-6 mb-8 bg-white shadow-sm max-w-6xl mx-auto">
-    <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
-            <i class="bi bi-grid-fill text-blue-500"></i>
-            <span>Manage Rooms</span>
-        </h2>
-        <a href="{{ route('rooms.create', $hostel) }}"
-           class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
-            <i class="bi bi-plus-lg"></i>
-            Add Room
-        </a>
-    </div>
-</div>
+
 
 <!-- Main Content Wrapper -->
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
+    @hostel_manager
+    <nav class="mb-6 flex items-center text-sm space-x-2">
+        <a href="{{route('hostels.show',$hostel)}}" class="text-blue-400 hover:text-blue-600 transition-colors">Back to {{$hostel->name}} </a>
+        <i class="bi bi-chevron-right text-blue-300 text-xs"></i>
+        <a href="{{ route('hostels.index') }}" class="text-blue-700 hover:text-blue-600 transition-colors">Mange Rooms.</a>
+    </nav>
+    @endhostel_manager
     <!-- Filters Section -->
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
         <div class="p-6">
@@ -86,6 +79,13 @@
                     <i class="bi bi-info-circle-fill"></i>
                     Total: {{ $rooms->total() }} rooms
                 </div>
+                <div class="flex items-center gap-4 text-sm text-gray-500">
+                            <a href="{{ route('rooms.create', $hostel) }}"
+                class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+                    <i class="bi bi-plus-lg"></i>
+                    Add Room
+                </a>
+                </div>
             </div>
         </div>
 
@@ -97,7 +97,7 @@
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Room</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Type</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Capacity</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Price</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Price(UGX)</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                     </tr>
@@ -130,8 +130,8 @@
         
                             <!-- Room Price -->
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-gray-900">₹{{ number_format($room->price, 2) }}</div>
-                                <div class="text-xs text-gray-400">per month</div>
+                                <div class="text-sm font-semibold text-gray-900">{{ number_format($room->price, 2) }}</div>
+                                <div class="text-xs text-gray-400">Per month</div>
                             </td>
         
                             <!-- Room Status -->
@@ -159,6 +159,7 @@
                                     <form action="{{ route('rooms.destroy', $room) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this room?');">
                                         @csrf
                                         @method('DELETE')
+                                        <input type="hidden" name="hostel_id" value="{{ $hostel->id }}">
                                         <button type="submit" class="text-red-600 hover:text-red-800" title="Delete">
                                             <i class="bi bi-trash"></i>
                                         </button>

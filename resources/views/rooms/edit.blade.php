@@ -4,9 +4,9 @@
 <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
     <!-- Breadcrumb -->
     <nav class="mb-4 flex items-center space-x-2 text-sm text-gray-500">
-        <a href="{{ route('rooms.index',$room->hostel) }}" class="hover:text-gray-700">Rooms</a>
+        <a href="{{ route('rooms.index',$room->hostel) }}" class="hover:text-gray-700 text-blue-500">Back to Manage Rooms</a>
         <i class="bi bi-chevron-right text-xs"></i>
-        <span class="text-gray-900">Edit Room</span>
+        <span class="text-blue-800">Edit Room</span>
     </nav>
 
     <div class="bg-white shadow-lg rounded-xl border border-gray-200">

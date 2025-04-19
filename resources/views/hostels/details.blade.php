@@ -26,7 +26,7 @@
               <!-- Photo Gallery -->
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 @if($hostel->photo)
-                    <img src="{{ Storage::url($hostel->photo) }}" 
+                    <img src="{{asset('images/logo.png')}}" 
                         alt="{{ $hostel->name }}"
                         class="w-full h-96 object-cover">
                 @else

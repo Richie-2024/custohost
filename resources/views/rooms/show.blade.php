@@ -1,5 +1,11 @@
 @extends('layouts.general')
 @section('content')
+
+<nav class="mb-6 flex items-center text-sm space-x-2">
+    <a href="{{route('rooms.index',$room->hostel)}}" class="text-blue-400 hover:text-blue-600 transition-colors">Back to Manage Rooms.</a>
+    <i class="bi bi-chevron-right text-blue-300 text-xs"></i>
+    <a href="#" class="text-blue-700 hover:text-blue-600 transition-colors">View Room.</a>
+</nav>
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 bg-white sm:rounded-xl sm:shadow-sm sm:border sm:p-6 p-4">
 

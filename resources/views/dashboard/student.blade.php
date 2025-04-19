@@ -73,7 +73,7 @@
                                 </div>
                                 <h4 class="text-md font-semibold text-gray-900">Room Details</h4>
                             </div>
-                            <p class="text-sm text-gray-800">Room {{ $activeBooking->room->room_number }}</p>
+                            <p class="text-sm text-gray-800">Room {{ $activeBooking->room->room_number ?? "Null" }}</p>
                             <p class="text-xs text-gray-500 mt-1">{{ ucfirst($activeBooking->room->type) }} Room</p>
                         </div>
         
@@ -159,46 +159,56 @@
                                 </th>
                             </tr>
                         </thead>
-                        
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($bookings as $booking)
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="bg-gray-100 rounded-lg p-2 mr-3">
-                                                <i data-lucide="building" class="h-5 w-5 text-gray-500"></i>
+                                                <!-- Bootstrap building icon -->
+                                                <i class="bi bi-building h-5 w-5 text-gray-500"></i>
                                             </div>
-                                            <div class="text-sm font-medium text-gray-900">{{ $booking->hostel->name }}</div>
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {{ $booking->hostel?->name ?? 'N/A' }}
+                                            </div>
                                         </div>
                                     </td>
-        
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Room {{ $booking->room->room_number }}</div>
-                                        <div class="text-sm text-gray-500">{{ ucfirst($booking->room->type) }}</div>
-                                    </td>
-        
+                        
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">
-                                            {{ $booking->check_in_date->format('M d') }} - {{ $booking->check_out_date->format('M d, Y') }}
+                                            Room {{ $booking->room?->room_number ?? 'N/A' }}
                                         </div>
                                         <div class="text-sm text-gray-500">
-                                            {{ $booking->check_in_date->diffInDays($booking->check_out_date) }} days
+                                            {{ ucfirst($booking->room?->type ?? 'N/A') }}
                                         </div>
                                     </td>
-        
+                        
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">
+                                            {{ $booking->check_in_date?->format('M d') ?? 'N/A' }} - 
+                                            {{ $booking->check_out_date?->format('M d, Y') ?? 'N/A' }}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            {{ $booking->check_in_date && $booking->check_out_date 
+                                                ? $booking->check_in_date->diffInDays($booking->check_out_date) . ' days' 
+                                                : 'N/A' }}
+                                        </div>
+                                    </td>
+                        
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-medium text-gray-900">
-                                            UGX{{ number_format($booking->total_amount, 2) }}
+                                            UGX{{ number_format($booking->total_amount ?? 0, 2) }}
                                         </div>
                                     </td>
-        
+                        
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                            {{ $booking->status === 'completed' ? 'bg-green-100 text-green-800' : 
-                                               ($booking->status === 'active' ? 'bg-blue-100 text-blue-800' : 
-                                               ($booking->status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800')) }}">
-                                            <i data-lucide="circle" class="h-2 w-2 mr-1"></i>
-                                            {{ ucfirst($booking->status) }}
+                                            {{ $booking->status === 'completed' ? 'bg-success text-success' : 
+                                               ($booking->status === 'active' ? 'bg-primary text-primary' : 
+                                               ($booking->status === 'cancelled' ? 'bg-danger text-danger' : 'bg-warning text-warning')) }}">
+                                            <!-- Bootstrap circle icon -->
+                                            <i class="bi bi-circle h-2 w-2 mr-1"></i>
+                                            {{ ucfirst($booking->status ?? 'N/A') }}
                                         </div>
                                     </td>
                                 </tr>
@@ -206,13 +216,15 @@
                                 <tr>
                                     <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
                                         <div class="flex flex-col items-center py-4">
-                                            <i data-lucide="calendar-x" class="h-8 w-8 text-gray-400 mb-2"></i>
+                                            <!-- Bootstrap calendar-x icon -->
+                                            <i class="bi bi-calendar-x h-8 w-8 text-gray-400 mb-2"></i>
                                             No booking history found
                                         </div>
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
+                        
                     </table>
                 </div>
             </div>

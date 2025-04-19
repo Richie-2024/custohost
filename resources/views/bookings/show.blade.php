@@ -1,7 +1,16 @@
+@php
+    $hostel = session('hostel_id');
+@endphp
+
 @extends('layouts.general')
 
 @section('content')
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
+    <nav class="mb-4 flex items-center space-x-2 text-sm text-gray-500">
+        <a href="{{route('hostels.show',$hostel)}}" class="hover:text-gray-700 text-blue-500">Back </a>
+        <i class="bi bi-chevron-right text-xs"></i>
+        <span class="text-blue-800">View this  Booking.</span>
+    </nav>
 
     {{-- Header Section --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 bg-white sm:rounded-xl sm:shadow-sm sm:border sm:p-6 p-4">
@@ -13,25 +22,56 @@
         </h2>
 
         {{-- Action Buttons --}}
-        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
-            
-            {{-- Edit Button --}}
-            <a href="#"
-               class="inline-flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm w-full sm:w-auto">
-                <i class="bi bi-pencil-square mr-2"></i> Edit Booking
-            </a>
+        @php
+    $status = strtolower($booking->status);
+@endphp
 
-            {{-- Delete Form --}}
-            <form action="{{ route('bookings.cancel', $booking) }}" method="POST" onsubmit="return confirm('Are you sure you want to Cancel this booking?');" class="w-full sm:w-auto">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                        class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-red-700 shadow-sm w-full sm:w-auto">
-                    <i class="bi bi-trash-fill mr-2"></i> Delete Booking
-                </button>
-            </form>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
 
-        </div>
+
+    {{-- Actions based on Status --}}
+    @if ($status === 'pending')
+        {{-- Approve Booking --}}
+        <form action="{{ route('bookings.approve', $booking) }}" method="POST" onsubmit="return confirm('Approve this booking?');" class="w-full sm:w-auto">
+            @csrf
+            <button type="submit"
+                    class="inline-flex items-center justify-center px-4 py-2 bg-green-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-green-700 shadow-sm w-full sm:w-auto">
+                <i class="bi bi-check-lg mr-2"></i> Approve
+            </button>
+        </form>
+
+        {{-- Reject Booking --}}
+        <form action="{{ route('bookings.reject', $booking) }}" method="POST" onsubmit="return confirm('Reject this booking?');" class="w-full sm:w-auto">
+            @csrf
+            <button type="submit"
+                    class="inline-flex items-center justify-center px-4 py-2 bg-yellow-500 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-yellow-600 shadow-sm w-full sm:w-auto">
+                <i class="bi bi-x-lg mr-2"></i> Reject
+            </button>
+        </form>
+
+    @elseif ($status === 'confirmed' || $status === 'active')
+        {{-- Cancel Booking --}}
+        <form action="{{ route('bookings.cancel', $booking) }}" method="POST" onsubmit="return confirm('Cancel this booking?');" class="w-full sm:w-auto">
+            @csrf
+            <button type="submit"
+                    class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-red-700 shadow-sm w-full sm:w-auto">
+                <i class="bi bi-x-octagon-fill mr-2"></i> Cancel
+            </button>
+        </form>
+
+    @elseif ($status === 'cancelled')
+        {{-- Approve Cancelled Booking --}}
+        <form action="{{ route('bookings.approve', $booking) }}" method="POST" onsubmit="return confirm('Re-approve this cancelled booking?');" class="w-full sm:w-auto">
+            @csrf
+            <button type="submit"
+                    class="inline-flex items-center justify-center px-4 py-2 bg-green-500 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-green-600 shadow-sm w-full sm:w-auto">
+                <i class="bi bi-arrow-clockwise mr-2"></i> Re-Approve
+            </button>
+        </form>
+    @endif
+
+</div>
+
     </div>
 
 </div>
@@ -73,13 +113,27 @@
                     </div>
 
                     {{-- Status --}}
-                    <div>
-                        <h4 class="text-sm font-medium text-gray-500">Status</h4>
-                        <span class="mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                            {{ $booking->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                            {{ ucfirst($booking->status) }}
-                        </span>
-                    </div>
+                    @php
+                    $status = strtolower($booking->status);
+                
+                    $statusClasses = [
+                        'pending' => 'bg-yellow-100 text-yellow-800',
+                        'confirmed' => 'bg-blue-100 text-green-800',
+                        'active' => 'bg-green-500 text-white',
+                        'completed' => 'bg-gray-100 text-green-800',
+                        'cancelled' => 'bg-red-100 text-red-800',
+                    ];
+                
+                    $badgeClass = $statusClasses[$status] ?? 'bg-gray-100 text-gray-800'; // fallback if status not recognized
+                @endphp
+                
+                <div>
+                    <h4 class="text-sm font-medium text-gray-500">Status</h4>
+                    <span class="mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $badgeClass }}">
+                        {{ ucfirst($booking->status) }}
+                    </span>
+                </div>
+                
 
                 </div>
             </div>

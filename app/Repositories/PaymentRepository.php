@@ -19,6 +19,7 @@ class PaymentRepository
             ->with(['booking'])
             ->get();
     }
+   
 
     public function getPaymentsByBooking(int $bookingId): Collection
     {
@@ -66,6 +67,12 @@ class PaymentRepository
         return Payment::where('hostel_id', $hostelId)
             ->where('status', 'completed')
             ->sum('amount');
+    }
+    
+    public function getPaymentsByStudent($studentId)
+    {
+        // Replace the following line with the actual logic to fetch payments by student ID
+        return Payment::where('student_id', $studentId)->get();
     }
 
     public function getPendingPayments(int $hostelId): Collection

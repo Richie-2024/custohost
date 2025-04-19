@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PaymentRequest;
 use App\Services\{PaymentService, BookingService};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -21,7 +22,7 @@ class PaymentController extends Controller
 
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $payments = $user->hasRole('hostel_manager')
             ? $this->paymentService->getPaymentsByHostel($user->hostel_id)
             : $this->paymentService->getPaymentsByStudent($user->id);
@@ -31,7 +32,7 @@ class PaymentController extends Controller
 
     public function create()
     {
-        $bookings = $this->bookingService->getActiveBookings(auth()->user()->hostel_id);
+        $bookings = $this->bookingService->getActiveBookings(Auth::user()->hostel_id);
         return view('payments.create', compact('bookings'));
     }
 
@@ -56,7 +57,7 @@ class PaymentController extends Controller
 
     public function pending()
     {
-        $pendingPayments = $this->paymentService->getPendingPayments(auth()->user()->hostel_id);
+        $pendingPayments = $this->paymentService->getPendingPayments(Auth::user()->hostel_id);
         return view('payments.pending', compact('pendingPayments'));
     }
 

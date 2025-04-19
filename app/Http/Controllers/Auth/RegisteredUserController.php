@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
         ]);
     
         // Assign a default role
-        $user->assignRole('student');
+        $user->assignRole('hostel_manager'); // Change to 'student' if needed
     
         // Trigger the Registered event
         event(new Registered($user));

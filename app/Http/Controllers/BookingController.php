@@ -69,9 +69,10 @@ class BookingController extends Controller
     }
     public function store(BookingRequest $request)
     {
+        
         try {
             $booking = $this->bookingService->createBooking($request->validated());
-            return redirect()->route('bookings.show', $booking)
+            return redirect()->route('hostels.show', $booking->hostel)
                 ->with('success', 'Booking created successfully. Please proceed with the payment.');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage())->withInput();

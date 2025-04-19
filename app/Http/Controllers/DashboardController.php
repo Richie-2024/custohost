@@ -42,6 +42,7 @@ class DashboardController extends Controller
                 $pendingBookings = $hostelIds->map(fn($id) => $this->bookingService->getPendingBookings($id))->flatten();
                 $totalRevenue = $hostelIds->sum(fn($id) => $this->paymentService->getTotalPaymentsForHostel($id));
     
+               
                 return view('dashboard.hostel-manager', compact(
                     'hostels', 'activeBookings', 'pendingBookings', 'totalRevenue'
                 ));

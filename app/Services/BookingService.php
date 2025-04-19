@@ -107,12 +107,12 @@ class BookingService
     }
     public function approveBooking(Booking $booking)
     {
-        $booking->status = 'approved';
+        $booking->status = 'confirmed';
         $booking->save();
     }
     public function rejectBooking(Booking $booking)
     {
-        $booking->status = 'rejected';
+        $booking->status = 'cancelled';
         $booking->save();
     }
 

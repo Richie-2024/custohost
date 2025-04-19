@@ -33,7 +33,7 @@ class RoomController extends Controller
     public function store(RoomRequest $request)
     {
         $room = $this->roomService->createRoom($request->validated());
-        return redirect()->route('rooms.show', $room)
+        return redirect()->route('rooms.index', $room->hostel)
             ->with('success', 'Room created successfully.');
     }
 
@@ -59,6 +59,7 @@ class RoomController extends Controller
 
     public function destroy(Request $request, $room)
     {
+       
         $this->roomService->deleteRoom($room);
         return redirect()->route('rooms.index',$request->hostel_id)
             ->with('success', 'Room deleted successfully.');

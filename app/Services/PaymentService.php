@@ -70,4 +70,22 @@ class PaymentService
     {
         return $this->paymentRepository->getPendingPayments($hostelId);
     }
+    public function findById($id)
+    {
+        return $this->paymentRepository->findById($id);
+    }
+    public function getPaymentsByStudent($studentId)
+    {
+        // Replace the following line with the actual logic to fetch payments by student ID
+        return $this->paymentRepository->getPaymentsByStudent($studentId);
+    }
+    public function confirmPayment($payment)
+    {
+        return $this->paymentRepository->updateStatus($payment, 'confirmed');
+    }
+    public function getPendingPayments($hostelId)
+    {
+        // Replace the following line with the actual logic to fetch pending payments
+        return Payment::where('hostel_id', $hostelId)->where('status', 'pending')->get();
+    }
 }

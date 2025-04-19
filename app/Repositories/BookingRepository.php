@@ -3,8 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Booking;
+use App\Models\Hostel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class BookingRepository
 {
@@ -12,6 +14,7 @@ class BookingRepository
     {
         return Booking::with(['hostel', 'room', 'student', 'payments'])->paginate(10);
     }
+  
 
     public function getBookingsByHostel(int $hostelId,int $perPage=10): LengthAwarePaginator
     {
@@ -64,10 +67,19 @@ class BookingRepository
 
     public function getActiveBookings(int $hostelId): Collection
     {
-        return Booking::where('hostel_id', $hostelId)
-            ->where('status', 'active')
-            ->with(['room', 'student'])
+        // Get all hostel IDs owned by the authenticated user
+        $hostelIds = Hostel::where('owner_id', Auth::id())->pluck('id');
+        // Ensure the requested hostel ID is part of the owned hostels
+        if (!$hostelIds->contains($hostelId)) {
+            return collect(); // Return an empty collection if the hostel is not owned by the user
+        }
+    
+        // Retrieve active bookings for the specific hostel
+        $bookings = Booking::whereIn('hostel_id', $hostelIds)
+            ->whereIn('status', ['active', 'confirmed', 'completed'])
+            ->with(['room', 'student']) // Eager load relationships
             ->get();
+        return $bookings;
     }
 
     public function getPendingBookings(int $hostelId): Collection

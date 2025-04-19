@@ -1,5 +1,16 @@
+@php
+Session::put('hostel_id',$hostel->id)
+@endphp
 @extends('layouts.general')
+
 @section('content')
+@hostel_manager
+<nav class="mb-6 flex items-center text-sm space-x-2">
+    <a href="{{route('dashboard')}}" class="text-blue-400 hover:text-blue-600 transition-colors"> Dashboard</a>
+    <i class="bi bi-chevron-right text-blue-300 text-xs"></i>
+    <a href="{{ route('hostels.index') }}" class="text-blue-700 hover:text-blue-600 transition-colors">Manage {{$hostel->name}}</a>
+</nav>
+@endhostel_manager
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 bg-white sm:rounded-xl sm:shadow-sm sm:border sm:p-6 p-4">
 
@@ -8,7 +19,8 @@
             <i class="bi bi-building text-gray-600 text-xl"></i>
             {{ $hostel->name }}
         </h2>
-
+      
+      
         <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <!-- Edit Hostel -->
@@ -17,7 +29,7 @@
                 <i class="bi bi-pencil-fill mr-2 text-sm"></i>
                 Edit Hostel
             </a>
-
+          
             <!-- Delete Hostel -->
             <form action="{{ route('hostels.destroy', $hostel) }}"
                   method="POST"
@@ -164,44 +176,117 @@
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        @forelse($hostel->bookings()->latest()->take(5)->get() as $booking)
-                                            <tr class="hover:bg-gray-50 transition-colors">
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <div class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
-                                                            <i class="bi bi-person-fill text-gray-500 text-sm"></i>
-                                                        </div>
-                                                        <div class="ml-3">
-                                                            <div class="text-sm font-medium text-gray-900">{{ $booking->student->name }}</div>
-                                                            <div class="text-sm text-gray-500">{{ $booking->student->email }}</div>
-                                                        </div>
+                                    <tbody>
+                                    @forelse($hostel->bookings()->latest()->take(5)->get() as $booking)
+                                            <tr class="hover:bg-gray-50 transition">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{{ $booking->id }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ $booking->student->name ?? 'N/A' }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Room {{ $booking->room->room_number ?? 'N/A' }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    <div>
+                                                        {{ optional($booking->check_in_date)->format('M d, Y') ?? 'N/A' }} → 
+                                                        {{ optional($booking->check_out_date)->format('M d, Y') ?? 'N/A' }}
                                                     </div>
                                                 </td>
-                                                <td class="px-6 py-4">
-                                                    <div class="text-sm text-gray-900">Room {{ $booking->room->room_number }}</div>
-                                                    <div class="text-sm text-gray-500">{{ ucfirst($booking->room->type) }}</div>
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <div class="text-sm text-gray-900">{{ $booking->check_in_date->format('M d, Y') }}</div>
-                                                    <div class="text-sm text-gray-500">{{ $booking->check_in_date->format('h:i A') }}</div>
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                                        {{ $booking->status === 'active' ? 'bg-green-100 text-green-800' :
-                                                           ($booking->status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                                           'bg-gray-100 text-gray-800') }}">
-                                                        <i class="bi bi-circle-fill mr-1 text-xs"></i>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                                                        {{ $booking->status === 'confirmed' ? 'bg-green-100 text-green-700' : 
+                                                           ($booking->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 
+                                                           'bg-red-100 text-red-700') }}">
+                                                        <i class="bi bi-circle-fill mr-2"></i>
                                                         {{ ucfirst($booking->status) }}
                                                     </span>
                                                 </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                                    <!-- Status Badge -->
+                                                    <div class="flex items-center justify-center gap-2 mb-2">
+                                                        @php
+                                                            $status = strtolower($booking->status);
+                                                
+                                                            $statusClasses = [
+                                                                'pending' => 'bg-yellow-100 text-yellow-800',
+                                                                'confirmed' => 'bg-blue-100 text-blue-800',
+                                                                'active' => 'bg-green-100 text-green-800',
+                                                                'completed' => 'bg-gray-100 text-gray-800',
+                                                                'cancelled' => 'bg-red-100 text-red-800',
+                                                            ];
+                                                            $statusIcons = [
+                                                                'pending' => 'clock',
+                                                                'confirmed' => 'check2-circle',
+                                                                'active' => 'play-circle',
+                                                                'completed' => 'check-circle',
+                                                                'cancelled' => 'x-circle',
+                                                            ];
+                                                        @endphp
+                                                
+                                                      
+                                                    </div>
+                                                
+                                                    <!-- Action Buttons -->
+                                                    <div class="flex items-center justify-center gap-4">
+                                                        <!-- Always show View -->
+                                                        <a href="{{ route('bookings.show', $booking) }}" 
+                                                           class="text-green-600 hover:text-green-800 transition-colors duration-200" 
+                                                           title="View Booking" 
+                                                           aria-label="View Booking">
+                                                            <i class="bi bi-eye-fill text-xl"></i>
+                                                        </a>
+                                                
+                                                        @if ($status === 'pending')
+                                                            <!-- Approve Booking -->
+                                                            <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Approve this booking?');">
+                                                                @csrf
+                                                                <button type="submit" class="text-blue-600 hover:text-blue-800 transition-colors duration-200" title="Approve Booking" aria-label="Approve Booking">
+                                                                    <i class="bi bi-check-lg text-xl"></i>
+                                                                </button>
+                                                            </form>
+                                                
+                                                            <!-- Reject Booking -->
+                                                            <form action="{{ route('bookings.reject', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Reject this booking?');">
+                                                                @csrf
+                                                                <button type="submit" class="text-yellow-600 hover:text-yellow-800 transition-colors duration-200" title="Reject Booking" aria-label="Reject Booking">
+                                                                    <i class="bi bi-x-lg text-xl"></i>
+                                                                </button>
+                                                            </form>
+                                                        
+                                                        @elseif ($status === 'confirmed' || $status === 'active')
+                                                            <!-- Cancel Booking -->
+                                                            <form action="{{ route('bookings.cancel', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Cancel this booking?');">
+                                                                @csrf
+                                                                <button type="submit" class="text-red-600 hover:text-red-800 transition-colors duration-200" title="Cancel Booking" aria-label="Cancel Booking">
+                                                                    <i class="bi bi-x-octagon-fill text-xl"></i>
+                                                                </button>
+                                                            </form>
+                                                
+                                                        @elseif ($status === 'cancelled')
+                                                            <!-- Optional: Approve again if needed -->
+                                                            <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Approve this cancelled booking?');">
+                                                                @csrf
+                                                                <button type="submit" class="text-green-600 hover:text-green-800 transition-colors duration-200" title="Approve Cancelled Booking" aria-label="Approve Cancelled Booking">
+                                                                    <i class="bi bi-arrow-clockwise text-xl"></i>
+                                                                </button>
+                                                            </form>
+                                                
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No recent bookings found</td>
+                                                <td colspan="7" class="px-6 py-10 text-center text-gray-400">
+                                                    <div class="flex flex-col items-center space-y-4">
+                                                        <i class="bi bi-calendar-x-fill text-4xl"></i>
+                                                        <p class="text-sm">No bookings found</p>
+                                                        <a href="{{ route('bookings.create') }}" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 text-sm font-semibold">
+                                                            <i class="bi bi-plus-lg"></i> Add your first booking
+                                                        </a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforelse
                                     </tbody>
+                                    
                                 </table>
                             </div>
                         </div>
