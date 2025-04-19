@@ -31,21 +31,34 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone_code' => ['required', 'string'],
+            'phone' => ['required', 'string', 'max:15', 'unique:users,phone'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'terms' => ['accepted'],
         ]);
-
+    
+        // Combine phone code and phone number
+        $phone = $request->phone_code . $request->phone;
+            // Create user
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $phone,
             'password' => Hash::make($request->password),
         ]);
+    
+        // Assign a default role
         $user->assignRole('student');
-
+    
+        // Trigger the Registered event
         event(new Registered($user));
-
+    
+        // Log in the user
         Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+    
+        // Redirect to the dashboard
+        return redirect()->route('dashboard');
     }
+    
 }
