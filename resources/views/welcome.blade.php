@@ -104,7 +104,7 @@
                 <li><a href="#testimonials" class="nav-link hover:text-amber-300 transition">Testimonials</a></li>
                 <li><a href="#faq" class="nav-link hover:text-amber-300 transition">FAQ</a></li>
                 <li>
-                    <a href="#apply" class="bg-amber-400 hover:bg-amber-500 text-white px-6 py-2 rounded-full font-semibold ml-4 transition animate__animated animate__pulse animate__infinite">
+                    <a href="{{route('login')}}" class="bg-amber-400 hover:bg-amber-500 text-white px-6 py-2 rounded-full font-semibold ml-4 transition animate__animated animate__pulse animate__infinite">
                         Book Now <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </li>
