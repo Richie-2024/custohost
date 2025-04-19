@@ -19,16 +19,40 @@ class PaymentController extends Controller
         $this->paymentService = $paymentService;
         $this->bookingService = $bookingService;
     }
-
+    public function showpayment($id)
+    {
+        // Fetch the specific booking based on the ID
+        $booking = $this->bookingService->findById($id);
+    
+        // Check if the booking exists
+        if (!$booking) {
+            return redirect()->route('bookings.index')->with('error', 'Booking not found');
+        }
+    
+        // Pass the booking data to the view
+        return view('payment.show', compact('booking'));
+    }
+    
+    
     public function index()
     {
         $user = auth()->user();
+    
         $payments = $user->hasRole('hostel_manager')
             ? $this->paymentService->getPaymentsByHostel($user->hostel_id)
             : $this->paymentService->getPaymentsByStudent($user->id);
-
-        return view('payment.index', compact('payments'));
+    
+       
+        if (!$user->hasRole('hostel_manager')) {
+            $booking = \App\Models\Booking::with(['hostel', 'room'])
+                ->where('student_id', $user->id)
+                ->latest()
+                ->first();
+        }
+    
+        return view('payment.index', compact('payments', 'booking'));
     }
+    
 
     public function create()
     {

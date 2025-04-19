@@ -9,10 +9,18 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
             @if($payments->isEmpty())
-                <div class="text-center text-gray-500">
-                    <i data-lucide="file" class="w-8 h-8 mx-auto mb-2 text-gray-400"></i>
-                    <p>No payments found.</p>
-                </div>
+            <div class="text-center text-gray-500">
+                <i data-lucide="file" class="w-8 h-8 mx-auto mb-2 text-gray-400"></i>
+                <p>Please you have a pending Hostel payment.</p>
+            
+                    <a href="{{ route('showpayment.page', ['id' => $booking->id]) }}">
+                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        Pay Now
+                    </button>
+                </a>
+                
+            </div>
+            
             @else
                 <div class="overflow-x-auto">
                     <table class="min-w-full table-auto text-sm">

@@ -15,18 +15,17 @@ class BookingRepository
 
     public function getBookingsByHostel(int $hostelId): Collection
     {
-        return Booking::where('hostel_id', $hostelId)
-            ->with(['room', 'student', 'payments'])
+        return Booking::with(['student', 'hostel', 'room']) // Ensure 'hostel' is loaded
+            ->where('hostel_id', $hostelId)
+            ->latest()
             ->get();
     }
-
     public function getBookingsByStudent(int $studentId): Collection
     {
-        return Booking::where('student_id', $studentId)
-            ->with(['hostel', 'room', 'payments'])
+        return Booking::with(['hostel', 'room', 'payments']) // Ensure 'hostel' is loaded
+            ->where('student_id', $studentId)
             ->get();
     }
-
     public function getPaginatedBookings(int $hostelId, int $perPage = 10): LengthAwarePaginator
     {
         return Booking::where('hostel_id', $hostelId)

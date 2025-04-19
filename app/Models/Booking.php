@@ -27,11 +27,7 @@ class Booking extends Model
         'total_amount' => 'decimal:2',
     ];
 
-    public function hostel()
-    {
-        return $this->belongsTo(Hostel::class);
-    }
-
+   
     public function room()
     {
         return $this->belongsTo(Room::class);
@@ -46,4 +42,9 @@ class Booking extends Model
     {
         return $this->hasMany(Payment::class);
     }
+    public function hostel()
+{
+    return $this->belongsTo(Hostel::class);
+}
+
 }

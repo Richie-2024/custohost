@@ -35,9 +35,9 @@
                         @foreach ($bookings as $booking)
                             <tr>
                                 <td class="px-6 py-4 text-gray-800">{{ $loop->iteration }}</td>
-                                <td class="px-6 py-4 text-gray-900">{{ $booking->user->name }}</td>
+                                <td class="px-6 py-4 text-gray-900">{{ $booking->student->name }}</td>
                                 <td class="px-6 py-4 text-gray-900">{{ $booking->hostel->name }}</td>
-                                <td class="px-6 py-4 text-gray-900">{{ $booking->room_number }}</td>
+                                <td class="px-6 py-4 text-gray-900">{{ $booking->room->room_number }}</td>
                                 <td class="px-6 py-4 text-gray-600">{{ $booking->created_at->format('d M Y') }}</td>
                                 <td class="px-6 py-4 text-right">
                                     <a href="{{ route('bookings.show', $booking) }}"

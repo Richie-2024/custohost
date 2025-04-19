@@ -21,14 +21,18 @@ class BookingController extends Controller
     }
 
     public function index()
-    {
-        $user = auth()->user();
-        $bookings = $user->hasRole('hostel_manager')
-            ? $this->bookingService->getBookingsByHostel($user->hostel_id)
-            : $this->bookingService->getBookingsByStudent($user->id);
+{
+    $user = auth()->user();
 
-        return view('bookings.index', compact('bookings'));
+    if ($user->hasRole('hostel_manager')) {
+        $bookings = $this->bookingService->getBookingsByHostel($user->hostel_id);
+    } else {
+        $bookings = $this->bookingService->getBookingsByStudent($user->id);
     }
+// dd($bookings);
+    return view('bookings.index', compact('bookings'));
+}
+
 
     public function create()
     {

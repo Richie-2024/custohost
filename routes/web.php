@@ -7,7 +7,8 @@ use App\Http\Controllers\{
     RoomController,
     BookingController,
     PaymentController,
-    DashboardController
+    DashboardController,
+    FlutterwaveController
 };
 
 Route::get('/', function () {
@@ -17,6 +18,8 @@ Route::get('/', function () {
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/payment', [FlutterwaveController::class, 'initiatePayment'])->name('payment.initiate');
+Route::get('/payment/callback', [FlutterwaveController::class, 'paymentCallback'])->name('payment.callback');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,6 +30,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/hostels/browse', [HostelController::class, 'browse'])->name('hostels.browse');
+    Route::get('/hostels', [HostelController::class, 'index'])->name('hostels.index');
 
     // Shared Routes (accessible by both roles)
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
@@ -37,7 +42,6 @@ Route::middleware(['auth'])->group(function () {
     // Hostel Manager Routes
     Route::middleware(['auth', 'hostel_manager'])->group(function () {
         // Hostels
-        Route::get('/hostels', [HostelController::class, 'index'])->name('hostels.index');
         Route::get('/hostels/create', [HostelController::class, 'create'])->name('hostels.create');
         Route::post('/hostels', [HostelController::class, 'store'])->name('hostels.store');
         Route::get('/hostels/{hostel}', [HostelController::class, 'show'])->name('hostels.show');
@@ -69,7 +73,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
         Route::get('/payments/pending', [PaymentController::class, 'pending'])->name('payments.pending');
         Route::post('/payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
+        Route::get('/payment', [PaymentController::class, 'showpayment'])->name('showpayment.page');
     });
+    Route::get('/pay/{id}', [PaymentController::class, 'showpayment'])->name('showpayment.page');
+
+
 
     // Student Routes
     Route::middleware(['auth', 'student'])->group(function () {
@@ -81,8 +89,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
         Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
         Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
-
+       
         // Payments
+        
         Route::get('/payments/{booking}/pay', [PaymentController::class, 'createForBooking'])->name('payments.booking.create');
     });
 });
