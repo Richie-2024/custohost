@@ -14,10 +14,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
-    protected $routeMiddleware = [
-        // Other middleware
-        'hostelManager' => \App\Http\Middleware\CheckForHostelManager::class,
-    ];
+
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -48,5 +45,6 @@ class Kernel extends HttpKernel
         // ✅ Custom Middleware
         'student' => \App\Http\Middleware\EnsureUserIsStudent::class,
         'hostel_manager' => \App\Http\Middleware\CheckForHostelManager::class,
+        'role' => \App\Http\Middleware\CheckRole::class,
     ];
 }
