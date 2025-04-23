@@ -2,7 +2,7 @@
   <div class="flex items-center space-x-3">
     <!-- Brand Logo -->
     <img src="{{ asset('images/logo.png') }}" alt="Brand Logo" class="w-10 h-10 rounded-full" />
-    <h1 class="text-xl font-semibold">SparkHost</h1>
+    <h1 class="text-xl font-semibold">CustoHost</h1>
   </div>
 
   <!-- Hamburger icon for small screens -->

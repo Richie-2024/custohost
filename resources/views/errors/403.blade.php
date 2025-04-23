@@ -77,10 +77,10 @@
 <body>
 <div class="error-container">
     <div class="logo-container">
-        <img src="/images/innov_logo.png" alt="SparkHost Logo">
+        <img src="/images/innov_logo.png" alt="CustoHost Logo">
     </div>
     <div class="innovation-text">
-        <h3>SparkHost</h3>
+        <h3>CustoHost</h3>
     </div>
     <h1>403</h1>
     <h2>Unauthorized Access</h2>

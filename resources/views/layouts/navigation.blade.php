@@ -7,7 +7,7 @@
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="text-xl font-bold text-gray-900 flex items-center gap-2">
                         <i data-lucide="home" class="h-6 w-6 text-blue-600"></i>
-                        SparkHost
+                        CustoHost
                     </a>
                 </div>
 

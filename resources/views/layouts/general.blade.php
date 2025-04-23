@@ -17,7 +17,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-title" content="Custospark" />
   <!-- Page Title -->
-  <title>@yield('title', 'SparkHost') - Custospark</title>
+  <title>@yield('title', 'CustoHost') - Custospark</title>
   <link rel="icon" href="{{ asset('images/v8.png') }}" type="image/x-icon" />
   
   <!-- Tailwind CSS: Utility-First CSS Framework -->

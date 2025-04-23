@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login | SparkHost</title>
+  <title>Login | CustoHost</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -36,7 +36,7 @@
     <div class="text-center mb-6">
       <a href="/" class="inline-flex items-center space-x-2">
         <i class="fas fa-home text-3xl text-white"></i>
-        <span class="text-2xl font-bold">Hostel<span class="text-amber-400">Hub</span></span>
+        <span class="text-2xl font-bold">Custo<span class="text-amber-400">Host</span></span>
       </a>
     </div>
 

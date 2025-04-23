@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'SparkHost') }}</title>
+    <title>{{ config('app.name', 'CustoHost') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -58,7 +58,7 @@
         <footer class="bg-white border-t border-gray-200 mt-auto">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <div class="text-center text-sm text-gray-500">
-                    © {{ date('Y') }} SparkHost. All rights reserved.
+                    © {{ date('Y') }} CustoHost. All rights reserved.
                 </div>
             </div>
         </footer>
