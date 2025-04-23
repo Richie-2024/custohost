@@ -198,11 +198,13 @@
     </table>
 
     <!-- Pagination Section -->
-     @if ($bookings->hasPages())
-        <div class="px-6 py-4 border-t border-gray-200 flex justify-center">
+    @if ($bookings->hasPages())
+    <div class="px-6 py-4 border-t border-gray-200 flex justify-center">
+        <div class="text-blue-600">
             {{ $bookings->links() }}
         </div>
-    @endif 
+    </div>
+@endif
 </div>
 
 

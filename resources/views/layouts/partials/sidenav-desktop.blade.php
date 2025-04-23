@@ -10,7 +10,8 @@
 
       </a>
     </li>
-
+    
+  
     <!-- My Hostels Dropdown -->
     @php
       $hostelRoutes = ['hostels.show', 'hostels.create', 'hostels.edit', 'hostels.rooms', 'hostels.bookings'];
@@ -53,45 +54,47 @@
       
       </ul>
     </li>
+{{-- Bookings --}}
+    <li>
+      <a href="{{ route('bookings.all') }}" 
+         class="block py-2 px-6 flex items-center 
+         {{ request()->routeIs('bookings.all') ? 'bg-indigo-100 text-indigo-800 font-semibold' : 'hover:bg-indigo-50 text-gray-800' }}">
+         <i class="bi bi-calendar-check text-lg mr-3"></i> Bookings
+      </a>
+  </li>
+  {{-- Payments --}}
+  
+  <li>
+      <a href="{{ route('payments.index') }}" 
+         class="block py-2 px-6 flex items-center 
+         {{ request()->routeIs('payments.index') ? 'bg-indigo-100 text-indigo-800 font-semibold' : 'hover:bg-indigo-50 text-gray-800' }}">
+         <i class="bi bi-cash-stack text-lg mr-3"></i> Payments
+      </a>
+  </li>
 
     <!-- Settings Dropdown -->
     @php
-      $settingRoutes = ['settings.general', 'settings.security', 'settings.notifications'];
+      $settingRoutes = ['profile.show', 'settings.notifications'];
       $isSettingsActive = collect($settingRoutes)->contains(function($route) {
           return request()->routeIs($route);
       });
     @endphp
     <li>
-      <button class="desktop--dropdown-toggle block w-full text-left py-2 px-6 {{ $isSettingsActive ? 'bg-indigo-50' : 'hover:bg-indigo-50' }} focus:outline-none flex items-center " data-dropdown-target="desktop--settings-dropdown">
+      <button class="desktop--dropdown-toggle block w-full text-left py-2  px-6 {{ $isSettingsActive ? 'bg-indigo-50' : 'hover:bg-indigo-50' }} focus:outline-none flex items-center " data-dropdown-target="desktop--settings-dropdown">
         <i class="bi bi-gear text-lg mr-3"></i>
         Settings
         <i class="bi bi-chevron-down ml-auto text-gray-600 transition-transform duration-200 {{ $isSettingsActive ? 'rotate-180' : '' }}"></i>
       </button>
       <ul id="desktop--settings-dropdown" class="desktop--dropdown pl-6 space-y-2 {{ $isSettingsActive ? '' : 'hidden' }}">
         <li>
-          <a href="#" 
-             data-group="settings"
-             class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  text-gray-500
-                    {{ request()->routeIs('settings.general') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
-            General
-          </a>
+          <a href="{{ route('profile.show') }}" 
+          data-group="settings"
+          class="desktop--dropdown-link block py-2 ml-3 hover:bg-indigo-100 focus:outline-none text-gray-500
+                 {{ request()->routeIs('profile.show') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
+          <i class="bi bi-person-circle text-lg mr-3 "></i> Profile
+       </a>   
         </li>
-        <li>
-          <a href="#" 
-             data-group="settings"
-             class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  text-gray-500
-                    {{ request()->routeIs('settings.security') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
-            Security
-          </a>
-        </li>
-        <li>
-          <a href="#" 
-             data-group="settings"
-             class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  text-gray-500
-                    {{ request()->routeIs('settings.notifications') ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
-            Notifications
-          </a>
-        </li>
+      
       </ul>
     </li>
 @endhostel_manager

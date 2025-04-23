@@ -25,7 +25,7 @@ class HostelController extends Controller
 
     public function create()
     {
-        return view('hostels.create');
+        return view(view: 'hostels.create');
     }
 
     public function store(HostelRequest $request)

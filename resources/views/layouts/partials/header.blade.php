@@ -17,19 +17,24 @@
     <!-- Profile Dropdown -->
     <div class="relative">
       <button id="profile-btn" class="flex items-center space-x-2 text-white hover:text-indigo-400 transition duration-200">
-        <img src="{{ asset('images/profile.png') }}" alt="Profile Photo" class="w-10 h-10 rounded-full" />
-        {{-- <span>Profile</span> --}}
+        <img src="{{ Auth::user()->profile_image ? Storage::url(Auth::user()->profile_image) : asset('images/profile.png') }}" 
+        alt="Profile Photo" 
+        class="w-10 h-10 rounded-full" />
+
         <i class="bi bi-chevron-down"></i>
       </button>
       <!-- Dropdown Menu -->
       <div id="profile-dropdown" class="absolute right-0 hidden bg-white text-black shadow-lg rounded-md mt-2 w-48 py-2">
-        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
-        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Settings</a>
+        <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">
+          <i class="bi bi-person-circle text-lg mr-3 "></i>
+          Profile</a>
+        {{-- <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Settings</a> --}}
         <form action="{{ route('logout') }}" method="POST" class="inline">
           @csrf
-          <button type="submit" class="block w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
-            Logout
-          </button>
+          <button type="submit" class="block w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2">
+            <i class="bi bi-box-arrow-right text-lg"></i> Logout
+        </button>
+        
         </form>
       </div>
     </div>
