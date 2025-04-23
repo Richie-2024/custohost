@@ -50,9 +50,7 @@ class RoomService
 
     public function updateRoom(Room $room, array $data): bool
     {
-        // Convert amenities to JSON if necessary
         $data = $this->convertAmenitiesToJson($data);
-        // Delegate the update logic to the repository
         return $this->roomRepository->update($room, $data);
     }
     

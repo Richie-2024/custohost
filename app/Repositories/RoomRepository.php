@@ -81,4 +81,24 @@ class RoomRepository
             })
             ->get();
     }
+    public function checkRoomAvailability(int $roomId, string $checkInDate, string $checkOutDate): bool
+    {
+        // Example logic to check room availability
+        $room = Room::find($roomId);
+
+        if (!$room) {
+            return false;
+        }
+
+        $conflictingBookings = $room->bookings()
+            ->where(function ($query) use ($checkInDate, $checkOutDate) {
+                $query->whereBetween('check_in_date', [$checkInDate, $checkOutDate])
+                      ->orWhereBetween('check_out_date', [$checkInDate, $checkOutDate])
+                      ->orWhereRaw('? BETWEEN check_in_date AND check_out_date', [$checkInDate])
+                      ->orWhereRaw('? BETWEEN check_in_date AND check_out_date', [$checkOutDate]);
+            })
+            ->exists();
+
+        return !$conflictingBookings;
+    }
 }

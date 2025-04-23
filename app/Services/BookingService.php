@@ -120,6 +120,14 @@ class BookingService
     {
         return $this->bookingRepository->getActiveBookings($hostelId);
     }
+    public function getPendingBookingsForOwnerHostels(): LengthAwarePaginator
+    {
+        return $this->bookingRepository->getPendingBookingsForOwnerHostels();
+    }
+    public function getActiveBookingsForOwnerHostels()
+    {
+        return $this->bookingRepository->getActiveBookingsForOwnerHostels();
+    }
 
     public function getPendingBookings(int $hostelId): Collection
     {

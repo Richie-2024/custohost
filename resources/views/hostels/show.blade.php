@@ -165,29 +165,46 @@ Session::put('hostel_id',$hostel->id)
                                     <i class="bi bi-chevron-right"></i>
                                 </a>
                             </div>
-        
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Booking ID</th>
+                                            <th class="px-6 py-3 text-center text-xs font-medium  text-gray-500 uppercase tracking-wider">Student</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Room</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check In</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                         </tr>
                                     </thead>
+                            
                                     <tbody>
-                                    @forelse($hostel->bookings()->latest()->take(5)->get() as $booking)
+                                        @forelse($hostel->bookings()->latest()->take(5)->get() as $booking)
                                             <tr class="hover:bg-gray-50 transition">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{{ $booking->id }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ $booking->student->name ?? 'N/A' }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Room {{ $booking->room->room_number ?? 'N/A' }}</td>
+                                                <!-- Student -->
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                    #{{ $booking->id }}
+                                                </td>
+                            
+                                                <!-- Room -->
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                    {{ $booking->student->name ?? 'N/A' }}
+                                                </td>
+                            
+                                                <!-- Check In -->
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                                    Room {{ $booking->room->room_number ?? 'N/A' }}
+                                                </td>
+                            
+                                                <!-- Date Range -->
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                                     <div>
                                                         {{ optional($booking->check_in_date)->format('M d, Y') ?? 'N/A' }} → 
                                                         {{ optional($booking->check_out_date)->format('M d, Y') ?? 'N/A' }}
                                                     </div>
                                                 </td>
+                            
+                                                <!-- Status Badge -->
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
                                                         {{ $booking->status === 'confirmed' ? 'bg-green-100 text-green-700' : 
@@ -197,80 +214,72 @@ Session::put('hostel_id',$hostel->id)
                                                         {{ ucfirst($booking->status) }}
                                                     </span>
                                                 </td>
+                            
+                                                <!-- Actions -->
                                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                                    <!-- Status Badge -->
-                                                    <div class="flex items-center justify-center gap-2 mb-2">
-                                                        @php
-                                                            $status = strtolower($booking->status);
-                                                
-                                                            $statusClasses = [
-                                                                'pending' => 'bg-yellow-100 text-yellow-800',
-                                                                'confirmed' => 'bg-blue-100 text-blue-800',
-                                                                'active' => 'bg-green-100 text-green-800',
-                                                                'completed' => 'bg-gray-100 text-gray-800',
-                                                                'cancelled' => 'bg-red-100 text-red-800',
-                                                            ];
-                                                            $statusIcons = [
-                                                                'pending' => 'clock',
-                                                                'confirmed' => 'check2-circle',
-                                                                'active' => 'play-circle',
-                                                                'completed' => 'check-circle',
-                                                                'cancelled' => 'x-circle',
-                                                            ];
-                                                        @endphp
-                                                
-                                                      
-                                                    </div>
-                                                
-                                                    <!-- Action Buttons -->
+                                                    @php
+                                                        $status = strtolower($booking->status);
+                                                        $statusClasses = [
+                                                            'pending' => 'bg-yellow-100 text-yellow-800',
+                                                            'confirmed' => 'bg-blue-100 text-blue-800',
+                                                            'active' => 'bg-green-100 text-green-800',
+                                                            'completed' => 'bg-gray-100 text-gray-800',
+                                                            'cancelled' => 'bg-red-100 text-red-800',
+                                                        ];
+                                                        $statusIcons = [
+                                                            'pending' => 'clock',
+                                                            'confirmed' => 'check2-circle',
+                                                            'active' => 'play-circle',
+                                                            'completed' => 'check-circle',
+                                                            'cancelled' => 'x-circle',
+                                                        ];
+                                                    @endphp
+                            
                                                     <div class="flex items-center justify-center gap-4">
-                                                        <!-- Always show View -->
+                                                        <!-- View Button -->
                                                         <a href="{{ route('bookings.show', $booking) }}" 
                                                            class="text-green-600 hover:text-green-800 transition-colors duration-200" 
-                                                           title="View Booking" 
-                                                           aria-label="View Booking">
+                                                           title="View Booking" aria-label="View Booking">
                                                             <i class="bi bi-eye-fill text-xl"></i>
                                                         </a>
-                                                
+                            
                                                         @if ($status === 'pending')
-                                                            <!-- Approve Booking -->
+                                                            <!-- Approve -->
                                                             <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Approve this booking?');">
                                                                 @csrf
                                                                 <button type="submit" class="text-blue-600 hover:text-blue-800 transition-colors duration-200" title="Approve Booking" aria-label="Approve Booking">
                                                                     <i class="bi bi-check-lg text-xl"></i>
                                                                 </button>
                                                             </form>
-                                                
-                                                            <!-- Reject Booking -->
+                            
+                                                            <!-- Reject -->
                                                             <form action="{{ route('bookings.reject', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Reject this booking?');">
                                                                 @csrf
                                                                 <button type="submit" class="text-yellow-600 hover:text-yellow-800 transition-colors duration-200" title="Reject Booking" aria-label="Reject Booking">
                                                                     <i class="bi bi-x-lg text-xl"></i>
                                                                 </button>
                                                             </form>
-                                                        
-                                                        @elseif ($status === 'confirmed' || $status === 'active')
-                                                            <!-- Cancel Booking -->
+                            
+                                                        @elseif (in_array($status, ['confirmed', 'active']))
+                                                            <!-- Cancel -->
                                                             <form action="{{ route('bookings.cancel', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Cancel this booking?');">
                                                                 @csrf
                                                                 <button type="submit" class="text-red-600 hover:text-red-800 transition-colors duration-200" title="Cancel Booking" aria-label="Cancel Booking">
                                                                     <i class="bi bi-x-octagon-fill text-xl"></i>
                                                                 </button>
                                                             </form>
-                                                
+                            
                                                         @elseif ($status === 'cancelled')
-                                                            <!-- Optional: Approve again if needed -->
+                                                            <!-- Re-Approve -->
                                                             <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Approve this cancelled booking?');">
                                                                 @csrf
                                                                 <button type="submit" class="text-green-600 hover:text-green-800 transition-colors duration-200" title="Approve Cancelled Booking" aria-label="Approve Cancelled Booking">
                                                                     <i class="bi bi-arrow-clockwise text-xl"></i>
                                                                 </button>
                                                             </form>
-                                                
                                                         @endif
                                                     </div>
                                                 </td>
-                                                
                                             </tr>
                                         @empty
                                             <tr>
@@ -278,7 +287,7 @@ Session::put('hostel_id',$hostel->id)
                                                     <div class="flex flex-col items-center space-y-4">
                                                         <i class="bi bi-calendar-x-fill text-4xl"></i>
                                                         <p class="text-sm">No bookings found</p>
-                                                        <a href="{{ route('bookings.create') }}" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 text-sm font-semibold">
+                                                        <a href="{{ route('bookings.create',$hostel) }}" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 text-sm font-semibold">
                                                             <i class="bi bi-plus-lg"></i> Add your first booking
                                                         </a>
                                                     </div>
@@ -286,9 +295,9 @@ Session::put('hostel_id',$hostel->id)
                                             </tr>
                                         @endforelse
                                     </tbody>
-                                    
                                 </table>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -305,7 +314,7 @@ Session::put('hostel_id',$hostel->id)
                             </h3>
         
                             @if($hostel->photo)
-                                <img src="{{ Storage::url($hostel->photo) }}" alt="{{ $hostel->name }}" class="w-full h-48 object-cover rounded-lg">
+                                <img src="{{ Storage::url(path: $hostel->photo) }}" alt="{{ $hostel->name }}" class="w-full h-48 object-cover rounded-lg">
                             @else
                                 <div class="w-full h-48 bg-gray-100 rounded-lg flex items-center justify-center">
                                     <i class="bi bi-image text-gray-400 text-4xl"></i>
@@ -336,6 +345,7 @@ Session::put('hostel_id',$hostel->id)
                                 </a>
                     
                                 <!-- Create Booking -->
+                                @if($hostel->status=='active')
                                 <a href="{{ route('bookings.create',$hostel) }}"
                                    class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
                                     <div class="flex items-center gap-3">
@@ -346,6 +356,7 @@ Session::put('hostel_id',$hostel->id)
                                     </div>
                                     <i class="bi bi-chevron-right text-gray-400 group-hover:text-gray-500"></i>
                                 </a>
+                                @endif
                     
                                 <!-- Manage Rooms -->
                                 <a href="{{ route('rooms.index', $hostel) }}"

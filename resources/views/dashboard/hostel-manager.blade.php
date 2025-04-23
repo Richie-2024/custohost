@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-sm">
-                        <a href="{{ route('bookings.all') }}" class="text-green-600 hover:text-green-800 font-semibold flex items-center gap-1">
+                        <a href="{{ route('bookings.all.active') }}" class="text-green-600 hover:text-green-800 font-semibold flex items-center gap-1">
                             Manage Bookings
                             <i class="bi bi-chevron-right"></i>
                         </a>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-sm">
-                        <a href="{{ route('bookings.pending') }}" class="text-yellow-600 hover:text-yellow-800 font-semibold flex items-center gap-1">
+                        <a href="{{ route('bookings.all.pending') }}" class="text-yellow-600 hover:text-yellow-800 font-semibold flex items-center gap-1">
                             Review Pending
                             <i class="bi bi-chevron-right"></i>
                         </a>
@@ -212,7 +212,7 @@
                     </a>
 
     
-                    <a href="{{ route('bookings.pending') }}" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                    <a href="{{ route('bookings.all.pending') }}" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                         <div class="flex items-center gap-3">
                             <div class="bg-yellow-100 rounded-lg p-2">
                                 <i class="bi bi-clock-fill text-yellow-600"></i>

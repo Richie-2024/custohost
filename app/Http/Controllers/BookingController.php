@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BookingRequest;
 use App\Models\Hostel;
 use App\Services\{BookingService, RoomService};
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
@@ -67,11 +68,33 @@ class BookingController extends Controller
         $bookings = $this->bookingService->getBookingsByHostel($hostelId);
         return view('bookings.hostel', compact('bookings'));
     }
+    public function getPendingBookingsForOwnerHostels()
+    {
+        $bookings = $this->bookingService->getPendingBookingsForOwnerHostels();
+        return view('bookings.all_pending_bookings', compact('bookings'));
+    }
+    public function getActiveBookingsForOwnerHostels()
+    {
+        $bookings = $this->bookingService->getActiveBookingsForOwnerHostels();
+        return view('bookings.all_active_bookings', compact('bookings'));
+    }
     public function store(BookingRequest $request)
     {
+
+        /**
+         *    "_token" => "81e5gTLpuCi9o1PREeUlT01xolqDxJc3t8tjHt2L"
+      "student_id" => "6"
+      "hostel_id" => "3"
+      "redirect_route" => "bookings.create"
+      "room_id" => "13"
+      "check_in_date" => "2025-04-25"
+      "check_out_date" => "2025-04-29"
+      "special_requests" => null
+         */
         
         try {
             $booking = $this->bookingService->createBooking($request->validated());
+
             return redirect()->route('hostels.show', $booking->hostel)
                 ->with('success', 'Booking created successfully. Please proceed with the payment.');
         } catch (\Exception $e) {

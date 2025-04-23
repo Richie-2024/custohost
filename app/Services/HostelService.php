@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class HostelService
 {
@@ -54,6 +55,7 @@ class HostelService
             $this->deletePhoto($hostel->photo);
             $data['photo'] = $this->uploadPhoto($data['photo']);
         }
+       
 
         return $this->hostelRepository->update($hostel, $data);
     }
@@ -87,4 +89,16 @@ class HostelService
             Storage::disk('public')->delete($photo);
         }
     }
+        public static function handleFileUpload($file, $directory, $disk)
+        {
+            try {
+                if (isset($file) && $file->isValid()) {
+                    return $file->store($directory, $disk);
+                }
+                return null; 
+            } catch (\Exception $e) {
+                Log::error("File Upload Error: " . $e->getMessage());
+                return null; 
+            }
+        }
 }

@@ -65,7 +65,7 @@ class BookingRepository
         $booking->update(['status' => $status]);
     }
 
-    public function getActiveBookings(int $hostelId): Collection
+    public function getActiveBookings(int $hostelId)
     {
         // Get all hostel IDs owned by the authenticated user
         $hostelIds = Hostel::where('owner_id', Auth::id())->pluck('id');
@@ -79,6 +79,38 @@ class BookingRepository
             ->whereIn('status', ['active', 'confirmed', 'completed'])
             ->with(['room', 'student']) // Eager load relationships
             ->get();
+        return $bookings;
+    }
+    public function getPendingBookingsForOwnerHostels($perPage = 10):LengthAwarePaginator
+    {
+        // Get all hostel IDs owned by the authenticated user
+        $hostelIds = Hostel::where('owner_id', Auth::id())->pluck('id');
+        // Ensure the requested hostel ID is part of the owned hostels
+        if (!$hostelIds) {
+            return collect()->paginate($perPage); // Return an empty collection if the hostel is not owned by the user
+        }
+    
+        // Retrieve active bookings for the specific hostel
+        $bookings = Booking::whereIn('hostel_id', $hostelIds)
+            ->whereIn('status', ['pending'])
+            ->with(['room', 'student']) // Eager load relationships
+            ->paginate($perPage);
+        return $bookings;
+    }
+    public function getActiveBookingsForOwnerHostels($perPage = 10):LengthAwarePaginator
+    {
+        // Get all hostel IDs owned by the authenticated user
+        $hostelIds = Hostel::where('owner_id', Auth::id())->pluck('id');
+        // Ensure the requested hostel ID is part of the owned hostels
+        if (!$hostelIds) {
+            return collect()->paginate($perPage); // Return an empty collection if the hostel is not owned by the user
+        }
+    
+        // Retrieve active bookings for the specific hostel
+        $bookings = Booking::whereIn('hostel_id', $hostelIds)
+            ->whereIn('status', ['pending'])
+            ->with(['room', 'student']) // Eager load relationships
+            ->paginate($perPage);
         return $bookings;
     }
 

@@ -9,7 +9,7 @@
 <nav class="mb-4 flex items-center space-x-2 text-sm text-gray-500">
     <a href="{{ route('dashboard') }}" class="hover:text-gray-700 text-blue-500">Dashboard</a>
     <i class="bi bi-chevron-right text-xs"></i>
-    <span class="text-blue-800">Manage Bookings.</span>
+    <span class="text-blue-800">Pending Bookings.</span>
 </nav>
 
 <!-- Main Content Wrapper -->
@@ -65,7 +65,7 @@
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div class="p-6 border-b border-gray-200">
             <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-gray-900">Booking List</h3>
+                <h3 class="text-lg font-semibold text-gray-900">Pending Bookings.</h3>
                 <div class="flex items-center gap-4 text-sm text-gray-500">
                     <i class="bi bi-info-circle-fill"></i>
                     Total: {{ $bookings->count() }} bookings
@@ -188,10 +188,8 @@
                     <td colspan="7" class="px-6 py-10 text-center text-gray-400">
                         <div class="flex flex-col items-center space-y-4">
                             <i class="bi bi-calendar-x-fill text-4xl"></i>
-                            <p class="text-sm">No bookings found</p>
-                            <a href="{{ route('bookings.create') }}" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 text-sm font-semibold">
-                                <i class="bi bi-plus-lg"></i> Add your first booking
-                            </a>
+                            <p class="text-sm">No Pending bookings found</p>
+                           
                         </div>
                     </td>
                 </tr>
@@ -200,11 +198,11 @@
     </table>
 
     <!-- Pagination Section -->
-    @if ($bookings->hasPages())
+     @if ($bookings->hasPages())
         <div class="px-6 py-4 border-t border-gray-200 flex justify-center">
             {{ $bookings->links() }}
         </div>
-    @endif
+    @endif 
 </div>
 
 

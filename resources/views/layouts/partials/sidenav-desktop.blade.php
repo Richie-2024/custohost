@@ -35,19 +35,22 @@
               Create Hostel
             </a>
           </li>
-        @else
+          @else
           @foreach (Auth::user()->hostels as $hostel)
-            <li>
-              <a href="{{ route('hostels.show', $hostel) }}" 
-                 data-group="hostels"
-                 class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none  flex items-center text-gray-500
-                        {{ request()->routeIs('hostels.show') && request()->route('hostel') == $hostel->id ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
-                        <i class="bi bi-door-open text-lg mr-3"></i>
-                        {{ $hostel->name }}
-              </a>
-            </li>
+              <li>
+                  <a href="{{ route('hostels.show', $hostel) }}" 
+                     data-group="hostels"
+                     class="desktop--dropdown-link block py-2 hover:bg-indigo-100 focus:outline-none flex items-center text-gray-500
+                            {{ request()->routeIs('hostels.show') && request()->route('hostel') == $hostel->id ? 'bg-indigo-100 text-indigo-700 font-semibold' : '' }}">
+                      <img src="{{ Storage::url($hostel->photo) }}" 
+                           alt="{{ $hostel->name }}" 
+                           class="w-8 h-8 rounded-full mr-3 object-cover">
+                      {{ $hostel->name }}
+                  </a>
+              </li>
           @endforeach
-        @endif
+      @endif
+      
       </ul>
     </li>
 

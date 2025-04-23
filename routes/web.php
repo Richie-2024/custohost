@@ -38,7 +38,10 @@ Route::group(['auth'], function () {
 
     // Shared Routes (accessible by both roles)
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
-    Route::get('/bookings', [BookingController::class, 'getAllBookings'])->name('bookings.all');
+    Route::get('/bookings', 
+    [BookingController::class, 'getAllBookings'])->name('bookings.all');
+    Route::get('/bookings/active/all', [BookingController::class, 'getActiveBookingsForOwnerHostels'])->name('bookings.all.active');
+    Route::get('/bookings/pending/all', [BookingController::class, 'getPendingBookingsForOwnerHostels'])->name('bookings.all.pending');
     Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
