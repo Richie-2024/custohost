@@ -3,29 +3,36 @@
 @section('content')
 
 <!-- Page Heading -->
-<div class="flex items-center justify-between mt-4 mb-6">
-    <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
-        <i class="bi bi-house-door-fill text-gray-600 text-2xl"></i>
-        {{ __('Browse Hostels') }}
-    </h2>
-    @if(session('error'))
-    <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">{{ session('error') }}</strong>
+<div class="mt-4 mb-6 px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+        <!-- Title -->
+        <h2 class="text-xl font-semibold text-gray-800 leading-tight flex items-center gap-2">
+            <i class="bi bi-house-door-fill text-gray-600 text-2xl"></i>
+            {{ __('Browse Hostels') }}
+        </h2>
+
+        <!-- Error Message -->
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative w-full sm:w-auto" role="alert">
+                <strong class="font-bold">{{ session('error') }}</strong>
+            </div>
+        @endif
+
+        <!-- Search Form -->
+        <form action="{{ route('hostels.browse') }}" method="GET" class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+            <input type="text" 
+                   name="search" 
+                   placeholder="Search hostels..." 
+                   value="{{ request('search') }}" 
+                   class="w-full sm:w-64 rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm px-4 py-2">
+            <button type="submit" 
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                <i class="bi bi-search mr-2"></i> Search
+            </button>
+        </form>
     </div>
-@endif
-    <!-- Search Form -->
-    <form action="{{ route('hostels.browse') }}" method="GET" class="flex items-center gap-2">
-        <input type="text" 
-               name="search" 
-               placeholder="Search hostels..." 
-               value="{{ request('search') }}" 
-               class="rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-        <button type="submit" 
-                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
-            <i class="bi bi-search me-2"></i> Search
-        </button>
-    </form>
 </div>
+
 
 <!-- Filters Section -->
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

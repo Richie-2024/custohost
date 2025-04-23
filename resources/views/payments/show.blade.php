@@ -24,8 +24,7 @@
                         <p class="text-sm text-gray-500">Created on {{ $payment->created_at->format('M d, Y H:i') }}</p>
                     </div>
                 </div>
-                
-                @if($payment->status === 'pending' && auth()->user()->hasRole('hostel_manager'))
+                @if($payment->status!='completed')
                 <form action="{{ route('payments.confirm', $payment->id) }}" method="POST">
                     @csrf
                     <input type="hidden" name="status" value="completed">

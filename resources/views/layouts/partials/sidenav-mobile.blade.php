@@ -69,6 +69,32 @@
         <i class="bi bi-cash-stack text-lg mr-3"></i> Payments
       </a>
     </li>
+    @endhostel_manager
+    @student
+    <li>
+      <a href="{{ route('hostels.browse') }}" 
+         class="block py-2 px-6  flex items-center 
+         {{ request()->routeIs('hostels.browse') ? 'bg-indigo-100 text-indigo-800 font-semibold' : 'hover:bg-indigo-50 text-gray-800' }}">
+         <i class="bi bi-house-door text-lg mr-3"></i>Browse Hostels
+  
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('payments.index') }}" 
+         class="block py-2 px-6  flex items-center 
+         {{ request()->routeIs('payments.index') ? 'bg-indigo-100 text-indigo-800 font-semibold' : 'hover:bg-indigo-50 text-gray-800' }}">
+         <i class="bi bi-cash-stack text-lg mr-3"></i>My Payments
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('bookings.all') }}" 
+         class="block py-2 px-6  flex items-center 
+         {{ request()->routeIs('bookings.all') ? 'bg-indigo-100 text-indigo-800 font-semibold' : 'hover:bg-indigo-50 text-gray-800' }}">
+         <i class="bi bi-calendar-check text-lg mr-3"></i>My  Bookings
+        </a>
+    </li>
+    @endstudent
+
 
     @php
       $settingRoutes = ['profile.show', 'settings.notifications'];
@@ -91,7 +117,7 @@
       </ul>
     </li>
 
-    @endhostel_manager
+    
 
   </ul>
 

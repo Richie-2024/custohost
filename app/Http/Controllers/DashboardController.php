@@ -50,7 +50,7 @@ class DashboardController extends Controller
             case 'student':
                 // Get student's bookings
                 $bookings = $this->bookingService->getBookingsByStudent($user->id);
-                $activeBooking = $bookings->firstWhere('status', 'active');
+                $activeBooking = $bookings->firstWhere('status', 'confirmed');
                 $pendingPayments = $this->paymentService->getPendingPaymentsForHostel($activeBooking?->hostel_id ?? 0);
     
                 return view('dashboard.student', compact(

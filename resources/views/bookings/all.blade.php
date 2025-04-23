@@ -144,6 +144,7 @@
                             </a>
                     
                             @if ($status === 'pending')
+                            @hostel_manager
                                 <!-- Approve Booking -->
                                 <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Approve this booking?');">
                                     @csrf
@@ -159,6 +160,7 @@
                                         <i class="bi bi-x-lg text-xl"></i>
                                     </button>
                                 </form>
+                                @endhostel_manager
                             
                             @elseif ($status === 'confirmed' || $status === 'active')
                                 <!-- Cancel Booking -->
@@ -168,8 +170,8 @@
                                         <i class="bi bi-x-octagon-fill text-xl"></i>
                                     </button>
                                 </form>
-                    
                             @elseif ($status === 'cancelled')
+                            @hostel_manager
                                 <!-- Optional: Approve again if needed -->
                                 <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline" onsubmit="return confirm('Approve this cancelled booking?');">
                                     @csrf
@@ -177,6 +179,9 @@
                                         <i class="bi bi-arrow-clockwise text-xl"></i>
                                     </button>
                                 </form>
+                             @endhostel_manager
+
+
                     
                             @endif
                         </div>

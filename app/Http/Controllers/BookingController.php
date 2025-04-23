@@ -81,20 +81,13 @@ class BookingController extends Controller
     public function store(BookingRequest $request)
     {
 
-        /**
-         *    "_token" => "81e5gTLpuCi9o1PREeUlT01xolqDxJc3t8tjHt2L"
-      "student_id" => "6"
-      "hostel_id" => "3"
-      "redirect_route" => "bookings.create"
-      "room_id" => "13"
-      "check_in_date" => "2025-04-25"
-      "check_out_date" => "2025-04-29"
-      "special_requests" => null
-         */
+           
         
         try {
             $booking = $this->bookingService->createBooking($request->validated());
-
+          if(Auth::user()->hasRole('student')){
+            redirect()->route('bookings.all')->with('success','Booking created successfully');
+          }
             return redirect()->route('hostels.show', $booking->hostel)
                 ->with('success', 'Booking created successfully. Please proceed with the payment.');
         } catch (\Exception $e) {

@@ -12,8 +12,8 @@
 
   <!-- Navigation Links -->
   <nav class="hidden lg:flex space-x-6">
-    <a href="#" class="hover:text-indigo-400 transition duration-200">Home</a>
-    <a href="#" class="hover:text-indigo-400 transition duration-200">Dashboard</a>
+    <a href="{{ route('home') }}" class="hover:text-indigo-400 transition duration-200">Home</a>
+    <a href="#" class="hover:text-indigo-400 transition duration-200">{{ Auth::user()->name }}</a>
     <!-- Profile Dropdown -->
     <div class="relative">
       <button id="profile-btn" class="flex items-center space-x-2 text-white hover:text-indigo-400 transition duration-200">

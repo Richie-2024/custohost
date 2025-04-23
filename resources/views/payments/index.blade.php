@@ -68,14 +68,22 @@
 
     <!-- Payments List -->
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        <div class="p-6 border-b border-gray-200">
-            <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-gray-900">Payment History</h3>
-                <div class="text-sm text-gray-500">
-                    Total Payments: {{ $payments->count() }}
-                </div>
+      <div class="p-6 border-b border-gray-200">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">Payment History</h3>
+            <div class="text-sm text-gray-500">
+                Total Payments: {{ $payments->count() }}
             </div>
+            <!-- Make Payment Button -->
+            @student
+            <a href="{{route('payments.create')}}" 
+               class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm">
+                <i class="bi bi-credit-card text-lg"></i> Make Payment
+            </a>
+            @endstudent
         </div>
+    </div>
+    
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -149,7 +157,7 @@
                         <td colspan="6" class="px-6 py-10 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="bi bi-credit-card text-4xl mb-4"></i>
-                                <p class="text-lg font-medium">No payments found</p>
+                                <p class="text-lg font-medium">No payment records found.</p>
                                 @if(auth()->user()->hasRole('hostel_manager'))
                                 <a href="{{ route('payments.create') }}" class="mt-2 text-blue-600 hover:text-blue-800">
                                     Record your first payment

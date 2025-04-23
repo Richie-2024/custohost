@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Booking;
 use App\Models\Hostel;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Collection;
@@ -69,6 +70,7 @@ class PaymentRepository
 
     public function updateStatus(Payment $payment, string $status): void
     {
+        
         $payment->update(['status' => $status]);
     }
 
@@ -82,7 +84,9 @@ class PaymentRepository
     public function getPaymentsByStudent($studentId)
     {
         // Replace the following line with the actual logic to fetch payments by student ID
-        return Payment::where('student_id', $studentId)->get();
+        $bookingIds=Booking::where('student_id',Auth::id())->pluck('id');
+        $payments= Payment::whereIn('booking_id', $bookingIds)->paginate(10);
+    return $payments;
     }
 
     public function getPendingPayments(int $hostelId): Collection

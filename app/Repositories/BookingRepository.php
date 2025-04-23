@@ -12,6 +12,10 @@ class BookingRepository
 {
     public function getAllBookings()
     {
+        if(Auth::user()->hasRole('student')){
+            return Booking::where('student_id',Auth::id())->with(['hostel', 'room', 'student', 'payments'])->paginate(10);
+
+        }
         return Booking::with(['hostel', 'room', 'student', 'payments'])->paginate(10);
     }
   
@@ -67,6 +71,8 @@ class BookingRepository
 
     public function getActiveBookings()
     {
+        if(Auth::user()->hasRole('hostel_manager')){
+
         // Get all hostel IDs owned by the authenticated user
         $hostelIds = Hostel::where('owner_id', Auth::id())->pluck('id');
         // Ensure the requested hostel ID is part of the owned hostels
@@ -79,6 +85,9 @@ class BookingRepository
             ->whereIn('status', ['active', 'confirmed', 'completed'])
             ->with(['room', 'student']) // Eager load relationships
             ->get();
+    }else{
+        $bookings=Booking::where('student_id',Auth::id())->whereIn('status',['active','confirmed','completed'])->with(['room','student'])->get();
+    }
         return $bookings;
     }
     public function getPendingBookingsForOwnerHostels($perPage = 10):LengthAwarePaginator

@@ -7,7 +7,12 @@
 @section('content')
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
     <nav class="mb-4 flex items-center space-x-2 text-sm text-gray-500">
+        @student
+        <a href="{{route('bookings.all')}}" class="hover:text-gray-700 text-blue-500">Back </a>
+        @endstudent
+        @hostel_manager
         <a href="{{route('hostels.show',$hostel)}}" class="hover:text-gray-700 text-blue-500">Back </a>
+        @endhostel_manager
         <i class="bi bi-chevron-right text-xs"></i>
         <span class="text-blue-800">View this  Booking.</span>
     </nav>
@@ -31,6 +36,7 @@
 
     {{-- Actions based on Status --}}
     @if ($status === 'pending')
+    @hostel_manager
         {{-- Approve Booking --}}
         <form action="{{ route('bookings.approve', $booking) }}" method="POST" onsubmit="return confirm('Approve this booking?');" class="w-full sm:w-auto">
             @csrf
@@ -48,7 +54,7 @@
                 <i class="bi bi-x-lg mr-2"></i> Reject
             </button>
         </form>
-
+        @endhostel_manager
     @elseif ($status === 'confirmed' || $status === 'active')
         {{-- Cancel Booking --}}
         <form action="{{ route('bookings.cancel', $booking) }}" method="POST" onsubmit="return confirm('Cancel this booking?');" class="w-full sm:w-auto">

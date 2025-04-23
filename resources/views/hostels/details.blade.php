@@ -1,6 +1,13 @@
 
 @extends('layouts.general')
 @section('content')
+@student
+<nav class="mb-6 flex items-center text-sm space-x-2">
+    <a href="{{route('hostels.browse')}}" class="text-blue-400 hover:text-blue-600 transition-colors">Browse More Hostels</a>
+    <i class="bi bi-chevron-right text-blue-300 text-xs"></i>
+    <a href="{{ route('hostels.index') }}" class="text-blue-700 hover:text-blue-600 transition-colors">Explore {{$hostel->name}}</a>
+</nav>
+@endstudent
 <!-- Header Section -->
         <div class="bg-white rounded-2xl border border-gray-200 shadow-md p-6 mb-5 flex flex-wrap items-center justify-between gap-4">
             <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-3">

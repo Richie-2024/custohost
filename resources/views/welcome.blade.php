@@ -105,7 +105,7 @@
                 <li><a href="#faq" class="nav-link hover:text-amber-300 transition">FAQ</a></li>
                 <li>
                     <a href="{{route('login')}}" class="bg-amber-400 hover:bg-amber-500 text-white px-6 py-2 rounded-full font-semibold ml-4 transition animate__animated animate__pulse animate__infinite">
-                        Book Now <i class="fas fa-arrow-right ml-2"></i>
+                        Account <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </li>
             </ul>
@@ -168,7 +168,7 @@
                     </div>
                     
                     <div class="flex flex-wrap gap-4">
-                        <a href="#apply" class="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-full font-bold transition duration-300 transform hover:scale-105">
+                        <a href="{{route('login')}}" class="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-full font-bold transition duration-300 transform hover:scale-105">
                             Book Your Room <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                         <a href="#video-tour" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold transition duration-300 hover:bg-white hover:text-sky-500">
