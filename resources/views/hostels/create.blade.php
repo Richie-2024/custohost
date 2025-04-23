@@ -11,6 +11,8 @@
             <a href="{{ route('hostels.index') }}" class="text-blue-700 hover:text-blue-600 transition-colors">Create Hostels</a>
         </nav>
         @endhostel_manager
+       
+
 
     <div class="bg-white shadow-lg rounded-xl border border-gray-200">
         <!-- Header -->

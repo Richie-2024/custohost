@@ -116,9 +116,9 @@ class BookingService
         $booking->save();
     }
 
-    public function getActiveBookings(int $hostelId): Collection
+    public function getActiveBookings()
     {
-        return $this->bookingRepository->getActiveBookings($hostelId);
+        return $this->bookingRepository->getActiveBookings();
     }
     public function getPendingBookingsForOwnerHostels(): LengthAwarePaginator
     {

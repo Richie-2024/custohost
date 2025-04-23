@@ -24,7 +24,7 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
         $payments = $user->hasRole('hostel_manager')
-            ? $this->paymentService->getPaymentsByHostel($user->hostel_id)
+            ? $this->paymentService->getPaymentsForOwnedHostels()
             : $this->paymentService->getPaymentsByStudent($user->id);
 
         return view('payments.index', compact('payments'));
@@ -32,7 +32,7 @@ class PaymentController extends Controller
 
     public function create()
     {
-        $bookings = $this->bookingService->getActiveBookings(Auth::user()->hostel_id);
+        $bookings = $this->bookingService->getActiveBookings();
         return view('payments.create', compact('bookings'));
     }
 

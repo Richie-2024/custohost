@@ -21,9 +21,9 @@ class PaymentService
         return $this->paymentRepository->getAllPayments();
     }
 
-    public function getPaymentsByHostel(int $hostelId): Collection
+    public function getPaymentsForOwnedHostels()
     {
-        return $this->paymentRepository->getPaymentsByHostel($hostelId);
+        return $this->paymentRepository->getPaymentsForOwnedHostels();
     }
 
     public function getPaymentsByBooking(int $bookingId): Collection
@@ -81,7 +81,7 @@ class PaymentService
     }
     public function confirmPayment($payment)
     {
-        return $this->paymentRepository->updateStatus($payment, 'confirmed');
+        return $this->paymentRepository->updateStatus($payment, 'completed');
     }
     public function getPendingPayments($hostelId)
     {

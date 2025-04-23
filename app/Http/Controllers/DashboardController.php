@@ -38,7 +38,7 @@ class DashboardController extends Controller
                 $hostelIds = $hostels->pluck('id');
     
                 // Fetch bookings and revenue using collection methods
-                $activeBookings = $hostelIds->map(fn($id) => $this->bookingService->getActiveBookings($id))->flatten();
+                $activeBookings = $hostelIds->map(fn($id) => $this->bookingService->getActiveBookings())->flatten();
                 $pendingBookings = $hostelIds->map(fn($id) => $this->bookingService->getPendingBookings($id))->flatten();
                 $totalRevenue = $hostelIds->sum(fn($id) => $this->paymentService->getTotalPaymentsForHostel($id));
     

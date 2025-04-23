@@ -65,12 +65,12 @@ class BookingRepository
         $booking->update(['status' => $status]);
     }
 
-    public function getActiveBookings(int $hostelId)
+    public function getActiveBookings()
     {
         // Get all hostel IDs owned by the authenticated user
         $hostelIds = Hostel::where('owner_id', Auth::id())->pluck('id');
         // Ensure the requested hostel ID is part of the owned hostels
-        if (!$hostelIds->contains($hostelId)) {
+        if (!$hostelIds) {
             return collect(); // Return an empty collection if the hostel is not owned by the user
         }
     

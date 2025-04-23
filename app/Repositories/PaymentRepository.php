@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Models\Hostel;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentRepository
 {
@@ -13,12 +15,20 @@ class PaymentRepository
         return Payment::with(['booking', 'hostel'])->get();
     }
 
-    public function getPaymentsByHostel(int $hostelId): Collection
+
+    public function getPaymentsForOwnedHostels(int $perPage=10):LengthAwarePaginator
     {
-        return Payment::where('hostel_id', $hostelId)
-            ->with(['booking'])
-            ->get();
+        // Get all hostel IDs owned by the authenticated user
+        $hostelIds = Hostel::where('owner_id', Auth::id())->pluck('id');
+    
+        // Retrieve payments linked to any of the owned hostels
+        $payments = Payment::whereIn('hostel_id', $hostelIds)
+            ->with(['booking','hostel']) // Eager load the booking relationship
+            ->paginate($perPage);
+    
+        return $payments;
     }
+    
    
 
     public function getPaymentsByBooking(int $bookingId): Collection

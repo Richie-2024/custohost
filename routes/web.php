@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bookings/{booking}/reject', [BookingController::class, 'reject'])->name('bookings.reject');
 
     // Payments Management
-    Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+    Route::get('/payments/create/form', [PaymentController::class, 'create'])->name('payments.create');
     Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
     Route::get('/payments/pending', [PaymentController::class, 'pending'])->name('payments.pending');
     Route::post('/payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');

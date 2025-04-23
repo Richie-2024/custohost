@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-2xl font-bold text-gray-800 leading-tight flex items-center gap-3">
                 <i class="bi bi-speedometer2 text-gray-600 text-2xl"></i>
-                Hostel Manager Dashboard
+                Hostel Manager
             </h2>
             <div class="flex items-center gap-4">
                 <span class="text-sm text-gray-500">Last updated: {{ now()->format('M d, Y h:i A') }}</span>
@@ -15,108 +15,101 @@
 
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <!-- Stats Overview -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <!-- Total Hostels -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-md hover:shadow-lg transition-all">
-                <div class="p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-blue-100 rounded-full p-3">
-                            <i class="bi bi-building text-blue-700 text-2xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Hostels</p>
-                            <p class="text-3xl font-extrabold text-gray-900">{{ $hostels->count() }}</p>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center justify-between text-sm">
-                        <a href="{{ route('hostels.index') }}" class="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1">
-                            View All
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
-                        <span class="flex items-center text-green-600 font-medium">
-                            <i class="bi bi-graph-up-arrow mr-1"></i>
-                            Active
-                        </span>
-                    </div>
+      <!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <!-- Total Hostels -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all">
+        <div class="p-6">
+            <div class="flex items-center gap-4">
+                <div class="bg-blue-200 rounded-full p-3">
+                    <i class="bi bi-building text-blue-700 text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Hostels</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $hostels->count() }}</p>
                 </div>
             </div>
-        
-            <!-- Active Bookings -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-md hover:shadow-lg transition-all">
-                <div class="p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-green-100 rounded-full p-3">
-                            <i class="bi bi-calendar-check text-green-700 text-2xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Active Bookings</p>
-                            <p class="text-3xl font-extrabold text-gray-900">{{ $activeBookings->count() }}</p>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center justify-between text-sm">
-                        <a href="{{ route('bookings.all.active') }}" class="text-green-600 hover:text-green-800 font-semibold flex items-center gap-1">
-                            Manage Bookings
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
-                        <span class="flex items-center text-green-600 font-medium">
-                            <i class="bi bi-people-fill mr-1"></i>
-                            Occupied
-                        </span>
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Pending Bookings -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-md hover:shadow-lg transition-all">
-                <div class="p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-yellow-100 rounded-full p-3">
-                            <i class="bi bi-clock-history text-yellow-700 text-2xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Pending Bookings</p>
-                            <p class="text-3xl font-extrabold text-gray-900">{{ $pendingBookings->count() }}</p>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center justify-between text-sm">
-                        <a href="{{ route('bookings.all.pending') }}" class="text-yellow-600 hover:text-yellow-800 font-semibold flex items-center gap-1">
-                            Review Pending
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
-                        <span class="flex items-center text-yellow-600 font-medium">
-                            <i class="bi bi-exclamation-circle-fill mr-1"></i>
-                            Needs Action
-                        </span>
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Total Revenue -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-md hover:shadow-lg transition-all">
-                <div class="p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-purple-100 rounded-full p-3">
-                            <i class="bi bi-wallet2 text-purple-700 text-2xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Revenue</p>
-                            <p class="text-3xl font-extrabold text-gray-900">UGX{{ number_format($totalRevenue, 2) }}</p>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center justify-between text-sm">
-                        <a href="{{ route('payments.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold flex items-center gap-1">
-                            View Payments
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
-                        <span class="flex items-center text-green-600 font-medium">
-                            <i class="bi bi-graph-up-arrow mr-1"></i>
-                            This Month
-                        </span>
-                    </div>
-                </div>
+            <div class="mt-4 flex items-center justify-between text-sm">
+                <a href="{{ route('hostels.index') }}" class="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1">
+                    View All <i class="bi bi-chevron-right"></i>
+                </a>
+                <span class="flex items-center text-green-600 font-medium">
+                    <i class="bi bi-graph-up-arrow mr-1"></i> Active
+                </span>
             </div>
         </div>
+    </div>
+
+    <!-- Active Bookings -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all">
+        <div class="p-6">
+            <div class="flex items-center gap-4">
+                <div class="bg-green-200 rounded-full p-3">
+                    <i class="bi bi-calendar-check text-green-700 text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Active Bookings</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $activeBookings->count() }}</p>
+                </div>
+            </div>
+            <div class="mt-4 flex items-center justify-between text-sm">
+                <a href="{{ route('bookings.all.active') }}" class="text-green-600 hover:text-green-800 font-semibold flex items-center gap-1">
+                    Manage Bookings <i class="bi bi-chevron-right"></i>
+                </a>
+                <span class="flex items-center text-green-600 font-medium">
+                    <i class="bi bi-people-fill mr-1"></i> Occupied
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Bookings -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all">
+        <div class="p-6">
+            <div class="flex items-center gap-4">
+                <div class="bg-yellow-200 rounded-full p-3">
+                    <i class="bi bi-clock-history text-yellow-700 text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Pending Bookings</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $pendingBookings->count() }}</p>
+                </div>
+            </div>
+            <div class="mt-4 flex items-center justify-between text-sm">
+                <a href="{{ route('bookings.all.pending') }}" class="text-yellow-600 hover:text-yellow-800 font-semibold flex items-center gap-1">
+                    Review Pending <i class="bi bi-chevron-right"></i>
+                </a>
+                <span class="flex items-center text-yellow-600 font-medium">
+                    <i class="bi bi-exclamation-circle-fill mr-1"></i> Needs Action
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Revenue -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all">
+        <div class="p-6">
+            <div class="flex items-center gap-4">
+                <div class="bg-purple-200 rounded-full p-3">
+                    <i class="bi bi-wallet2 text-purple-700 text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-center text-gray-500 uppercase tracking-wide">Total Revenue(UGX)</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($totalRevenue, 0) }}</p>
+                </div>
+            </div>
+            <div class="mt-4 flex items-center justify-between text-sm">
+                <a href="{{ route('payments.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold flex items-center gap-1">
+                    View Payments <i class="bi bi-chevron-right"></i>
+                </a>
+                <span class="flex items-center text-green-600 font-medium">
+                    <i class="bi bi-graph-up-arrow mr-1"></i> This Month
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
         
 
        <!-- Recent Bookings & Quick Actions -->
@@ -150,39 +143,57 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($activeBookings->take(5) as $booking)
                                 <tr class="hover:bg-gray-50 transition">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{{ $booking->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ $booking->student->name ?? 'N/A' }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Room {{ $booking->room->room_number ?? 'N/A' }}</td>
+                                    <!-- Booking ID -->
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        #{{ $booking->id }}
+                                    </td>
+                        
+                                    <!-- Student Name -->
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                        {{ $booking->student->name ?? 'N/A' }}
+                                    </td>
+                        
+                                    <!-- Room Number -->
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                        Room {{ $booking->room->room_number ?? 'N/A' }}
+                                    </td>
+                        
+                                    <!-- Booking Duration -->
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                         <div>
-                                            {{ optional($booking->check_in_date)->format('M d, Y') ?? 'N/A' }} → 
+                                            {{ optional($booking->check_in_date)->format('M d, Y') ?? 'N/A' }} →
                                             {{ optional($booking->check_out_date)->format('M d, Y') ?? 'N/A' }}
                                         </div>
                                     </td>
+                        
+                                    <!-- Booking Status -->
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold 
                                             {{ $booking->status === 'confirmed' ? 'bg-green-100 text-green-700' : 
                                                ($booking->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 
                                                'bg-red-100 text-red-700') }}">
-                                            <i class="bi bi-circle-fill mr-2"></i>
+                                            <i class="text-xs mr-2 
+                                                {{ $booking->status === 'confirmed' ? 'bi bi-check-circle-fill' : 
+                                                   ($booking->status === 'pending' ? 'bi bi-hourglass-split' : 
+                                                   'bi bi-x-circle-fill') }}"></i>
                                             {{ ucfirst($booking->status) }}
                                         </span>
                                     </td>
-                                 
-                                    
                                 </tr>
                             @empty
+                                <!-- No Active Bookings -->
                                 <tr>
                                     <td colspan="7" class="px-6 py-10 text-center text-gray-400">
                                         <div class="flex flex-col items-center space-y-4">
-                                            <i class="bi bi-calendar-x-fill text-4xl"></i>
+                                            <i class="bi bi-calendar-x-fill text-4xl text-gray-400"></i>
                                             <p class="text-sm">No Active bookings found</p>
-                                          
                                         </div>
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
+                        
+                        
                         
                     </table>
                 </div>
