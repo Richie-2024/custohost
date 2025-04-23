@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HostelHub- Modern Hostel Management</title>
+    <title>SparkHost- Modern Hostel Management</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -237,7 +237,7 @@
     <section id="features" class="py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 text-sky-500">Why Choose HostelHub?</h2>
+                <h2 class="text-4xl font-bold mb-4 text-sky-500">Why Choose SparkHost?</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">We provide everything you need for comfortable living and academic success</p>
             </div>
             
@@ -299,7 +299,7 @@
             <div class="flex flex-col lg:flex-row items-center">
                 <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
                     <h2 class="text-4xl font-bold mb-6">Take a Virtual Tour</h2>
-                    <p class="text-xl mb-8 text-gray-100">Explore our facilities and living spaces from the comfort of your home. Our 360° virtual tour gives you an immersive experience of HostelHub.</p>
+                    <p class="text-xl mb-8 text-gray-100">Explore our facilities and living spaces from the comfort of your home. Our 360° virtual tour gives you an immersive experience of SparkHost.</p>
                     <ul class="space-y-4 mb-8">
                         <li class="flex items-start">
                             <i class="fas fa-check-circle text-amber-300 mt-1 mr-3"></i>
@@ -321,7 +321,7 @@
                 <div class="lg:w-1/2 relative">
                     <div class="rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition duration-300">
                         <div class="aspect-w-16 aspect-h-9">
-                            <img src="https://images.unsplash.com/photo-1558002038-1055907df827?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="HostelHub Virtual Tour" class="w-full h-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1558002038-1055907df827?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="SparkHost Virtual Tour" class="w-full h-full object-cover">
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <button class="bg-white bg-opacity-80 rounded-full w-20 h-20 flex items-center justify-center text-sky-500 hover:bg-opacity-100 transition duration-300">
                                     <i class="fas fa-play text-3xl"></i>
@@ -744,7 +744,7 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4 text-sky-500">What Our Students Say</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Hear from students who've made HostelHub their home</p>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Hear from students who've made SparkHost their home</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -831,7 +831,7 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4 text-sky-500">Frequently Asked Questions</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Find answers to common questions about HostelHub</p>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Find answers to common questions about SparkHost</p>
             </div>
             
             <div class="max-w-3xl mx-auto">
@@ -1000,7 +1000,7 @@
                             </div>
                             <div>
                                 <h4 class="text-xl font-bold mb-1">Email</h4>
-                                <p class="text-gray-600">hello@hostelhub.edu</p>
+                                <p class="text-gray-600">hello@SparkHost.edu</p>
                             </div>
                         </div>
                     </div>
@@ -1075,7 +1075,7 @@
                 <div>
                     <div class="flex items-center space-x-3 mb-6">
                         <i class="fas fa-home text-2xl text-sky-400"></i>
-                        <span class="font-bold text-2xl">Hostel<span class="text-amber-300">Hub</span></span>
+                        <span class="font-bold text-2xl">Spark<span class="text-amber-300">Host</span></span>
                     </div>
                     <p class="text-gray-400 mb-6">Providing premium student accommodation since 2012. Our mission is to create safe, comfortable, and inspiring living spaces.</p>
                     <div class="flex space-x-4">
@@ -1131,7 +1131,7 @@
             
             <div class="border-t border-gray-800 mt-12 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 HostelHub. All rights reserved.</p>
+                    <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 SparkHost. All rights reserved.</p>
                     <div class="flex space-x-6">
                         <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
                         <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>

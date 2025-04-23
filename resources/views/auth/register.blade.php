@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Register | HostelHub</title>
+    <title>Register | SparkHost</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,7 +43,7 @@
         <!-- Header -->
         <div class="text-center mb-6">
             <h1 class="text-2xl font-bold">Create an Account</h1>
-            <p class="text-sm text-gray-200">Join HostelHub to manage your stay easily</p>
+            <p class="text-sm text-gray-200">Join SparkHost to manage your stay easily</p>
         </div>
 
         <!-- Form -->
@@ -99,7 +99,7 @@
             <div class="flex items-start mt-4 text-white text-sm">
                 <input type="checkbox" id="terms" name="terms" required class="mt-1 mr-2 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
                 <label for="terms">
-                    I agree to HostelHub's <a href="#" class="text-amber-400 hover:underline">Terms of Service</a> and <a href="#" class="text-amber-400 hover:underline">Privacy Policy</a>
+                    I agree to SparkHost's <a href="#" class="text-amber-400 hover:underline">Terms of Service</a> and <a href="#" class="text-amber-400 hover:underline">Privacy Policy</a>
                 </label>
             </div>
 
