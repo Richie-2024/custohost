@@ -12,7 +12,7 @@
     <span class="text-blue-800">Manage Bookings.</span>
 </nav>
 
-<!-- Main Content Wrapper -->
+
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
     <!-- Filters Section -->
@@ -194,9 +194,6 @@
                         <div class="flex flex-col items-center space-y-4">
                             <i class="bi bi-calendar-x-fill text-4xl"></i>
                             <p class="text-sm">No bookings found</p>
-                            <a href="{{ route('bookings.create') }}" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 text-sm font-semibold">
-                                <i class="bi bi-plus-lg"></i> Add your first booking
-                            </a>
                         </div>
                     </td>
                 </tr>

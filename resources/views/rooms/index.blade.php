@@ -10,7 +10,7 @@
     <nav class="mb-6 flex items-center text-sm space-x-2">
         <a href="{{route('hostels.show',$hostel)}}" class="text-blue-400 hover:text-blue-600 transition-colors">Back to {{$hostel->name}} </a>
         <i class="bi bi-chevron-right text-blue-300 text-xs"></i>
-        <a href="{{ route('hostels.index') }}" class="text-blue-700 hover:text-blue-600 transition-colors">Mange Rooms.</a>
+        <a href="{{ route('hostels.index') }}" class="text-blue-700 hover:text-blue-600 transition-colors">Manage Rooms.</a>
     </nav>
     @endhostel_manager
     <!-- Filters Section -->

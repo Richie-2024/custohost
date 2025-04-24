@@ -36,7 +36,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-      $user2->assignRole('student');
+        $user2->assignRole('hostel_manager');
+   
 
     }
 }

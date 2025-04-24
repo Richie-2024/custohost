@@ -80,20 +80,23 @@ class BookingController extends Controller
     }
     public function store(BookingRequest $request)
     {
-
-           
-        
         try {
             $booking = $this->bookingService->createBooking($request->validated());
-          if(Auth::user()->hasRole('student')){
-            redirect()->route('bookings.all')->with('success','Booking created successfully');
-          }
+            $userRole = Auth::user()->getRoleNames()->first();
+    
+            if ($userRole === 'student') {
+                return redirect()->route('bookings.all')
+                    ->with('success', 'Booking created successfully');
+            }
+    
             return redirect()->route('hostels.show', $booking->hostel)
                 ->with('success', 'Booking created successfully. Please proceed with the payment.');
+                
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage())->withInput();
         }
     }
+    
 
     public function show($id)
     {
